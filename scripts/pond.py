@@ -29,7 +29,7 @@ def animate_grid(parent, frames, starts, duration, **style):
             if not values or path != values[-1]:
                 values.append(path)
                 times.append(f"{start / duration:.7f}".rstrip("0").rstrip("."))
-        element = ET.SubElement(group, "path", stroke="#%02x%02x%02x" % colour, d=values[0])
+        element = ET.SubElement(group, "path", color="#%02x%02x%02x" % colour, d=values[0])
         if len(values) > 1:
             ET.SubElement(element, "animate", attributeName="d", calcMode="discrete",
                           dur=f"{duration}ms", repeatCount="indefinite",
@@ -40,7 +40,7 @@ def pond_art(demo):
     """Read the classic recording once for both card layouts."""
     if demo.size != (956, 516):
         raise ValueError("Expected the 956 × 516 Koi Fetch recording")
-    group = ET.Element("g", fill="none")
+    group = ET.Element("g", fill="none", stroke="currentColor", attrib={"class": "pond"})
     # Each 11 × 22 terminal cell has two columns of four Braille dots.
     # The dash has a separate sample in the gap between adjacent Braille cells.
     columns = [x for x in range(660) if x % 11 in (2, 7)]

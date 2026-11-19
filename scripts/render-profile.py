@@ -19,6 +19,7 @@ FOREGROUND = "#d3c6aa"
 SECTION_LINE = "#58666a"
 SECTION_GAP = 16
 ASSETS = Path(__file__).resolve().parents[1] / "assets"
+LIGHT_STYLE = Path(__file__).with_name("profile-light.css")
 
 
 def profile_sections(stats):
@@ -98,12 +99,12 @@ def column(sections, width, font):
         key_width = max(font.getlength(f"{key}:") for key, _ in fields)
         value_x = label_x + round(key_width) + 12
         wrap_at = int((width - value_x - 6) / font.getlength("M"))
-        section = ET.SubElement(group, "g")
+        section = ET.SubElement(group, "g", color=accent, attrib={"class": title.lower().replace(" ", "-")})
         middle = width / 2
         gap = font.getlength(title) / 2 + 8
         header_y = y + 10
         border = f"M1 {header_y + 8}v-8H{middle-gap:.1f} M{middle+gap:.1f} {header_y}H{width-1}v8"
-        text_at(section, middle, y + 16, title, font, "#9caeac", **{"text-anchor": "middle"})
+        text_at(section, middle, y + 16, title, font, "#9caeac", **{"class": "heading", "text-anchor": "middle"})
         y += 42
         branches = []
         for label, value in fields:
@@ -111,20 +112,20 @@ def column(sections, width, font):
             branches.append(center_y)
             ET.SubElement(section, "path", d=ICONS[label],
                           transform=f"translate(25 {center_y-9}) scale(.9)",
-                          fill="none", stroke=accent, **{"stroke-width": "1.6",
+                          fill="none", stroke="currentColor", **{"stroke-width": "1.6",
                           "stroke-linecap": "round", "stroke-linejoin": "round"})
-            text_at(section, label_x, y, f"{label}:", font, accent)
+            text_at(section, label_x, y, f"{label}:", font, "currentColor")
             for line in textwrap.wrap(value, width=wrap_at):
-                text_at(section, value_x, y, line, font, FOREGROUND)
+                text_at(section, value_x, y, line, font, FOREGROUND, **{"class": "value"})
                 y += 25
         tree = f"M18 {branches[0]}H8V{branches[-1]}"
         tree += "".join(f"M8 {center}h10" for center in branches[1:])
-        ET.SubElement(section, "path", d=tree, fill="none", stroke=accent,
+        ET.SubElement(section, "path", d=tree, fill="none", stroke="currentColor",
                       opacity=".76", **{"stroke-width": "1.5"})
         bottom = y - 7
         border += f" M1 {bottom-8}v8H{width-1}v-8"
         ET.SubElement(section, "path", d=border, fill="none", stroke=SECTION_LINE,
-                      **{"stroke-width": "1.5"})
+                      **{"class": "frame", "stroke-width": "1.5"})
         y = bottom + 1 + SECTION_GAP
     return group, y - SECTION_GAP
 
@@ -148,7 +149,8 @@ def render(shapes, font, sections, mobile):
                      "font-family": "'JetBrains Mono','JetBrainsMono Nerd Font',monospace",
                      "font-size": str(font.size)})
     ET.SubElement(svg, "title", id="title").text = "Kevin Ebrahim’s profile with an animated Koi Fetch pond"
-    ET.SubElement(svg, "rect", width="100%", height="100%", fill=BACKGROUND)
+    ET.SubElement(svg, "style").text = LIGHT_STYLE.read_text(encoding="utf-8")
+    ET.SubElement(svg, "rect", width="100%", height="100%", fill=BACKGROUND, attrib={"class": "canvas"})
     px, py, pw, ph = pond_box
     pond = ET.SubElement(svg, "svg", x=str(px), y=str(py), width=str(pw), height=str(ph),
                          viewBox="0 0 660 516", preserveAspectRatio="none", **{"aria-hidden": "true"})

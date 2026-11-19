@@ -1,0 +1,14 @@
+@media (prefers-color-scheme: light) {
+  .canvas { fill: none; }
+  .heading { fill: #52655c; }
+  .value { fill: #35463d; }
+  .frame { stroke: #94a49b; }
+
+  .profile { color: #50692f; }
+  .languages { color: #336b4b; }
+  .interests { color: #805916; }
+  .projects { color: #246b70; }
+  .github-stats { color: #895376; }
+
+  .pond path { stroke: color-mix(in srgb, currentColor 74%, #282e33); }
+}
