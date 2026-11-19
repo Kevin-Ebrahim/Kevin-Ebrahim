@@ -1,0 +1,44 @@
+name: Refresh profile
+
+on:
+  schedule:
+    - cron: '17 4 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-profile
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    if: github.ref_name == github.event.repository.default_branch
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Read public GitHub stats
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/github-stats.py
+
+      - name: Render profile cards
+        run: |
+          curl -fsSL --retry 3 https://raw.githubusercontent.com/Kevin-Ebrahim/koi-fetch/4a6f4cbcff78816d6a910c2e6a3da3ca13413a29/docs/demo.gif -o "$RUNNER_TEMP/pond.gif"
+          curl -fsSL --retry 3 https://raw.githubusercontent.com/JetBrains/JetBrainsMono/cd5227bd1f61dff3bbd6c814ceaf7ffd95e947d9/fonts/ttf/JetBrainsMono-Regular.ttf -o "$RUNNER_TEMP/mono.ttf"
+          python3 -m venv "$RUNNER_TEMP/profile-env"
+          "$RUNNER_TEMP/profile-env/bin/pip" install 'Pillow==13.0.0'
+          "$RUNNER_TEMP/profile-env/bin/python" scripts/render-profile.py "$RUNNER_TEMP/pond.gif" "$RUNNER_TEMP/mono.ttf"
+
+      - name: Save changes
+        run: |
+          git add -- assets/github-stats.json assets/profile.gif assets/profile-mobile.gif
+          if ! git diff --cached --quiet; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -m '[chore] Refresh profile statistics'
+            git push
+          fi

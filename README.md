@@ -1,6 +1,6 @@
 <picture>
   <source media="(max-width: 640px)" srcset="./assets/profile-mobile.gif">
-  <img src="./assets/profile.gif" width="100%" alt="Kevin Ebrahim’s terminal profile beside an animated Koi Fetch pond. Computer Science and HPC, with Python and C++. My workstation runs Omarchy on a Dell Latitude 9410. The card includes languages, hobbies, contact information, and GitHub statistics.">
+  <img src="./assets/profile.gif" width="100%" alt="Kevin Ebrahim, Computer Science at Wits and a member of Wits HPC SIG. I build Cerberus, a student HPC cluster, use Python, C++, TypeScript and Bash, and am learning Rust. Classic Koi Fetch koi swim beside my profile.">
 </picture>
 
-[koi-fetch](https://github.com/Kevin-Ebrahim/koi-fetch) · [miru](https://github.com/Kevin-Ebrahim/miru) · [gh-tune](https://github.com/Kevin-Ebrahim/gh-tune)
+[Wits World](https://witsworld.co.za/) · [Specimen](https://github.com/Gradient-Ascenders/Specimen) · [VitaQ](https://github.com/Gradient-Ascenders/VitaQ) · [Miru](https://github.com/Kevin-Ebrahim/miru)
