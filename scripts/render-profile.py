@@ -19,7 +19,7 @@ ASSETS = Path(__file__).resolve().parents[1] / "assets"
 
 def profile_sections(stats):
     return {
-        "kevin@omarchy": ("#a7c080", [
+        "Profile": ("#a7c080", [
             ("Name", "Kevin Ebrahim"),
             ("Field", "Computer Science · HPC"),
             ("University", "Wits"),
@@ -34,22 +34,15 @@ def profile_sections(stats):
             ("Learning", "Rust"),
         ]),
         "Interests": ("#dbbc7f", [
-            ("Software", "CLI tools, Linux, automation"),
-            ("Hardware", "Servers, networking, HPC"),
-            ("Side Quests", "Game development, tinkering"),
-        ]),
-        "Currently": ("#dbbc7f", [
-            ("Building", "Cerberus, a student HPC cluster"),
-            ("Exploring", "Rust and systems programming"),
+            ("Software", "Linux, developer tools"),
+            ("Hardware", "HPC, homelabbing"),
+            ("Side Quests", "Game dev, ricing"),
         ]),
         "Projects": ("#7fbbb3", [
             ("Wits World", "Location-based campus adventure"),
             ("Specimen", "3D puzzle-platformer · Three.js"),
             ("VitaQ", "Community Clinic Appointment & Queue System"),
             ("Miru", "Anime TUI · Rust"),
-        ]),
-        "Contact": ("#7fbbb3", [
-            ("GitHub", "github.com/Kevin-Ebrahim"),
         ]),
         "GitHub Stats": ("#d699b6", [
             ("Repos", f"{stats['public_repos']:,} public"),
@@ -106,8 +99,8 @@ def render(demo_file, font, sections, mobile):
             pond_origin = ((base.width - pond_size[0]) // 2, 0)
             base.paste(panel, (16, 308))
         else:
-            left = details(font, 402, sections, ["Interests", "Currently"])
-            right = details(font, 638, sections, ["kevin@omarchy", "Languages", "Projects", "Contact", "GitHub Stats"])
+            left = details(font, 402, sections, ["Interests"])
+            right = details(font, 638, sections, ["Profile", "Languages", "Projects", "GitHub Stats"])
             pond_size = (408, 319)
             height = max(pond_size[1] + left.height + 12, right.height) + 36
             base = Image.new("RGB", (1100, height), BACKGROUND)
