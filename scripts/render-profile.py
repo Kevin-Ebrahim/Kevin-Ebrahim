@@ -17,6 +17,7 @@ from pond import pond_art
 BACKGROUND = "#2c343a"
 FOREGROUND = "#d3c6aa"
 SECTION_LINE = "#58666a"
+SECTION_GAP = 16
 ASSETS = Path(__file__).resolve().parents[1] / "assets"
 
 
@@ -26,27 +27,25 @@ def profile_sections(stats):
     return {
         "Profile": ("#a7c080", [
             ("Name", "Kevin Ebrahim"),
-            ("Field", "Computer Science · HPC"),
-            ("University", "Wits"),
-            ("Community", "Wits HPC SIG"),
+            ("Field", "Computer Science"),
+            ("University", "University Of The Witwatersrand"),
             ("Editor", "Neovim"),
-            ("OS", "Omarchy · Arch Linux"),
+            ("OS", "Arch Linux"),
         ]),
         "Languages": ("#83c092", [
-            ("Programming", "Python, C++, TypeScript"),
-            ("Scripting", "Bash"),
+            ("Programming", "Python, C++, TypeScript, Bash"),
             ("Exploring", "Rust"),
         ]),
         "Interests": ("#dbbc7f", [
-            ("Software", "Linux, developer tools"),
-            ("Hardware", "HPC, homelabbing"),
-            ("Side Quests", "Game dev, ricing"),
+            ("Software", "Linux, Open source, Cybersecurity"),
+            ("Hardware", "Servers, networking, HPC"),
+            ("Side Quests", "Games, ricing, tinkering"),
         ]),
         "Projects": ("#7fbbb3", [
             ("Wits World", "Campus exploration game"),
             ("Specimen", "3D puzzle-platformer"),
             ("VitaQ", "Clinic booking & queues"),
-            ("Miru", "Anime TUI · Rust"),
+            ("Miru", "Anime TUI"),
         ]),
         "GitHub Stats": ("#d699b6", [
             ("Repos", f"{stats['public_repos']:,} public"),
@@ -64,11 +63,9 @@ ICONS = {
     "Name": "M3 17c0-3 3-5 7-5s7 2 7 5 M13 6a3 3 0 1 1-6 0 3 3 0 1 1 6 0Z",
     "Field": "M6 5h8v10H6z M8 2v3m4-3v3M8 15v3m4-3v3M3 8h3m-3 4h3m8-4h3m-3 4h3",
     "University": "M1.5 7 10 3l8.5 4-8.5 4z M5 9v5q5 4 10 0V9m3-2v6",
-    "Community": "M12 6a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z M3 16q0-5 6.5-5t6.5 5 M14 4q4 1 2 5m-.5 2q3 1 3 4",
     "Editor": "m3 13 9-9 4 4-9 9-5 1z M10 6l4 4",
     "OS": "M3 3h14v11H3z M1 17h18",
     "Programming": "m6 5-5 5 5 5m8-10 5 5-5 5m-3-12L8 17",
-    "Scripting": "M2 3h16v14H2z M5 7l3 3-3 3m5 0h4",
     "Exploring": "M18 10a8 8 0 1 1-16 0 8 8 0 1 1 16 0Z m-5-3-2 5-4 1 2-5z",
     "Software": "M1.5 3.5h17v13h-17z M2 7.5h16M5 5.5h.2m2 0h.2",
     "Hardware": "M2 3h16v6H2z M2 11h16v6H2z M5 6h1m2 0h1m-4 8h1m2 0h1",
@@ -129,8 +126,8 @@ def column(sections, titles, width, font):
         border += f" M1 {bottom-8}v8H{width-1}v-8"
         ET.SubElement(section, "path", d=border, fill="none", stroke=SECTION_LINE,
                       **{"stroke-width": "1.5"})
-        y = bottom + 17
-    return group, y - 16
+        y = bottom + 1 + SECTION_GAP
+    return group, y - SECTION_GAP
 
 
 def render(shapes, font, sections, mobile):
@@ -144,12 +141,13 @@ def render(shapes, font, sections, mobile):
     else:
         width = 1100
         interests, interests_height = column(sections, ["Interests"], 480, font)
-        profile, profile_height = column(sections, ["Profile", "Languages", "Projects", "GitHub Stats"], 568, font)
-        left_height = 375 + 12 + interests_height
-        height = max(left_height, profile_height) + 36
-        top = (height - left_height) // 2
-        panels = [(interests, 18, top + 387), (profile, 514, 18)]
-        pond_box = (18, top, 480, 375)
+        profile, profile_height = column(sections, ["Profile", "Languages", "Projects"], 568, font)
+        stats, stats_height = column(sections, ["GitHub Stats"], 568, font)
+        upper_height = max(375, profile_height)
+        lower_y = 18 + upper_height + SECTION_GAP
+        height = lower_y + max(interests_height, stats_height) + 18
+        panels = [(profile, 514, 18), (interests, 18, lower_y), (stats, 514, lower_y)]
+        pond_box = (18, 18 + (upper_height - 375) // 2, 480, 375)
 
     svg = ET.Element("svg", xmlns="http://www.w3.org/2000/svg", width=str(width), height=str(height),
                      viewBox=f"0 0 {width} {height}", role="img", **{"aria-labelledby": "title",
