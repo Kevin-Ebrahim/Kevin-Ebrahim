@@ -107,8 +107,11 @@ def draw_line_changes(section, x, y, width, font, changes):
     if x + font.getlength(prefix + detail) > width - 8:
         text_at(section, x, y, net, font, FOREGROUND, **{"class": "value"})
         y += 25
-        x = min(x, width - 8 - font.getlength(detail))
         prefix = ""
+        if x + font.getlength(detail) > width - 8:
+            text_at(section, x, y, "(" + added + ",", font, "#a7c080", **{"class": "added"})
+            text_at(section, x, y + 25, deleted + ")", font, "#e67e80", **{"class": "deleted"})
+            return y + 50
     text = text_at(section, x, y, prefix + detail, font, FOREGROUND, **{"class": "value"})
     text.text = prefix + "("
     for value, style, colour, suffix in [(added, "added", "#a7c080", ", "), (deleted, "deleted", "#e67e80", ")")]:
@@ -118,14 +121,14 @@ def draw_line_changes(section, x, y, width, font, changes):
 
 
 def column(sections, width, font):
-    """Draw open terminal frames with values aligned inside each section."""
+    """Draw the section frames on one shared label and value grid."""
     group = ET.Element("g")
     label_x = 51
+    key_width = max(font.getlength(f"{key}:") for _, fields in sections.values() for key, _ in fields)
+    value_x = label_x + round(key_width) + 8
+    wrap_at = int((width - value_x - 6) / font.getlength("M"))
     y = 0
     for title, (accent, fields) in sections.items():
-        key_width = max(font.getlength(f"{key}:") for key, _ in fields)
-        value_x = label_x + round(key_width) + 12
-        wrap_at = int((width - value_x - 6) / font.getlength("M"))
         section = ET.SubElement(group, "g", color=accent, attrib={"class": title.lower().replace(" ", "-")})
         if title == "GitHub stats":
             ET.SubElement(section, "desc").text = (

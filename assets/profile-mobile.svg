@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<svg xmlns="http://www.w3.org/2000/svg" width="500" height="1151" viewBox="0 0 500 1151" role="img" aria-labelledby="title" font-family="'JetBrains Mono','JetBrainsMono Nerd Font',monospace" font-size="18">
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="1251" viewBox="0 0 500 1251" role="img" aria-labelledby="title" font-family="'JetBrains Mono','JetBrainsMono Nerd Font',monospace" font-size="18">
   <title id="title">Kevin Ebrahim’s profile with an animated Koi Fetch pond</title>
   <style>@media (prefers-color-scheme: light) {
   .canvas { fill: none; }
@@ -152,20 +152,20 @@
       <text x="234.0" y="16" fill="#9caeac" textLength="75.58" lengthAdjust="spacingAndGlyphs" class="heading" text-anchor="middle">Profile</text>
       <path d="M3 17c0-3 3-5 7-5s7 2 7 5 M13 6a3 3 0 1 1-6 0 3 3 0 1 1 6 0Z" transform="translate(25 27) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
       <text x="51" y="42" fill="currentColor" textLength="53.98" lengthAdjust="spacingAndGlyphs">Name:</text>
-      <text x="182" y="42" fill="#d3c6aa" textLength="140.36" lengthAdjust="spacingAndGlyphs" class="value">Kevin Ebrahim</text>
+      <text x="221" y="42" fill="#d3c6aa" textLength="140.36" lengthAdjust="spacingAndGlyphs" class="value">Kevin Ebrahim</text>
       <path d="M6 5h8v10H6z M8 2v3m4-3v3M8 15v3m4-3v3M3 8h3m-3 4h3m8-4h3m-3 4h3" transform="translate(25 52) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
       <text x="51" y="67" fill="currentColor" textLength="64.78" lengthAdjust="spacingAndGlyphs">Field:</text>
-      <text x="182" y="67" fill="#d3c6aa" textLength="172.75" lengthAdjust="spacingAndGlyphs" class="value">Computer science</text>
+      <text x="221" y="67" fill="#d3c6aa" textLength="172.75" lengthAdjust="spacingAndGlyphs" class="value">Computer science</text>
       <path d="M1.5 7 10 3l8.5 4-8.5 4z M5 9v5q5 4 10 0V9m3-2v6" transform="translate(25 77) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
       <text x="51" y="92" fill="currentColor" textLength="118.77" lengthAdjust="spacingAndGlyphs">University:</text>
-      <text x="182" y="92" fill="#d3c6aa" textLength="183.55" lengthAdjust="spacingAndGlyphs" class="value">University of the</text>
-      <text x="182" y="117" fill="#d3c6aa" textLength="140.36" lengthAdjust="spacingAndGlyphs" class="value">Witwatersrand</text>
+      <text x="221" y="92" fill="#d3c6aa" textLength="183.55" lengthAdjust="spacingAndGlyphs" class="value">University of the</text>
+      <text x="221" y="117" fill="#d3c6aa" textLength="140.36" lengthAdjust="spacingAndGlyphs" class="value">Witwatersrand</text>
       <path d="m3 13 9-9 4 4-9 9-5 1z M10 6l4 4" transform="translate(25 127) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
       <text x="51" y="142" fill="currentColor" textLength="75.58" lengthAdjust="spacingAndGlyphs">Editor:</text>
-      <text x="182" y="142" fill="#d3c6aa" textLength="64.78" lengthAdjust="spacingAndGlyphs" class="value">Neovim</text>
+      <text x="221" y="142" fill="#d3c6aa" textLength="64.78" lengthAdjust="spacingAndGlyphs" class="value">Neovim</text>
       <path d="M3 3h14v11H3z M1 17h18" transform="translate(25 152) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
       <text x="51" y="167" fill="currentColor" textLength="32.39" lengthAdjust="spacingAndGlyphs">OS:</text>
-      <text x="182" y="167" fill="#d3c6aa" textLength="107.97" lengthAdjust="spacingAndGlyphs" class="value">Arch Linux</text>
+      <text x="221" y="167" fill="#d3c6aa" textLength="107.97" lengthAdjust="spacingAndGlyphs" class="value">Arch Linux</text>
       <path d="M18 36H8V161M8 61h10M8 86h10M8 136h10M8 161h10" fill="none" stroke="currentColor" opacity=".76" stroke-width="1.5" />
       <path d="M1 18v-8H188.2 M279.8 10H467v8 M1 177v8H467v-8" fill="none" stroke="#58666a" class="frame" stroke-width="1.5" />
     </g>
@@ -173,11 +173,11 @@
       <text x="234.0" y="218" fill="#9caeac" textLength="97.17" lengthAdjust="spacingAndGlyphs" class="heading" text-anchor="middle">Languages</text>
       <path d="m6 5-5 5 5 5m8-10 5 5-5 5m-3-12L8 17" transform="translate(25 229) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
       <text x="51" y="244" fill="currentColor" textLength="129.56" lengthAdjust="spacingAndGlyphs">Programming:</text>
-      <text x="193" y="244" fill="#d3c6aa" textLength="259.12" lengthAdjust="spacingAndGlyphs" class="value">Python, C++, TypeScript,</text>
-      <text x="193" y="269" fill="#d3c6aa" textLength="43.19" lengthAdjust="spacingAndGlyphs" class="value">Bash</text>
+      <text x="221" y="244" fill="#d3c6aa" textLength="129.56" lengthAdjust="spacingAndGlyphs" class="value">Python, C++,</text>
+      <text x="221" y="269" fill="#d3c6aa" textLength="172.75" lengthAdjust="spacingAndGlyphs" class="value">TypeScript, Bash</text>
       <path d="M18 10a8 8 0 1 1-16 0 8 8 0 1 1 16 0Z m-5-3-2 5-4 1 2-5z" transform="translate(25 279) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
       <text x="51" y="294" fill="currentColor" textLength="107.97" lengthAdjust="spacingAndGlyphs">Exploring:</text>
-      <text x="193" y="294" fill="#d3c6aa" textLength="43.19" lengthAdjust="spacingAndGlyphs" class="value">Rust</text>
+      <text x="221" y="294" fill="#d3c6aa" textLength="43.19" lengthAdjust="spacingAndGlyphs" class="value">Rust</text>
       <path d="M18 238H8V288M8 288h10" fill="none" stroke="currentColor" opacity=".76" stroke-width="1.5" />
       <path d="M1 220v-8H177.4 M290.6 212H467v8 M1 304v8H467v-8" fill="none" stroke="#58666a" class="frame" stroke-width="1.5" />
     </g>
@@ -185,57 +185,61 @@
       <text x="234.0" y="345" fill="#9caeac" textLength="97.17" lengthAdjust="spacingAndGlyphs" class="heading" text-anchor="middle">Interests</text>
       <path d="M1.5 3.5h17v13h-17z M2 7.5h16M5 5.5h.2m2 0h.2" transform="translate(25 356) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
       <text x="51" y="371" fill="currentColor" textLength="97.17" lengthAdjust="spacingAndGlyphs">Software:</text>
-      <text x="193" y="371" fill="#d3c6aa" textLength="226.73" lengthAdjust="spacingAndGlyphs" class="value">Linux, FOSS, security</text>
+      <text x="221" y="371" fill="#d3c6aa" textLength="226.73" lengthAdjust="spacingAndGlyphs" class="value">Linux, FOSS, security</text>
       <path d="M2 3h16v6H2z M2 11h16v6H2z M5 6h1m2 0h1m-4 8h1m2 0h1" transform="translate(25 381) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
       <text x="51" y="396" fill="currentColor" textLength="97.17" lengthAdjust="spacingAndGlyphs">Hardware:</text>
-      <text x="193" y="396" fill="#d3c6aa" textLength="259.12" lengthAdjust="spacingAndGlyphs" class="value">Servers, networking, HPC</text>
-      <path d="M6 6h8q2.5 0 3.2 3l1.2 5q.6 4-2.4 2l-3-3H7l-3 3q-3 2-2.4-2l1.2-5Q3.5 6 6 6Z M6 8v4m-2-2h4m4-1h.3m1.8 2h.3" transform="translate(25 406) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-      <text x="51" y="421" fill="currentColor" textLength="129.56" lengthAdjust="spacingAndGlyphs">Side quests:</text>
-      <text x="193" y="421" fill="#d3c6aa" textLength="259.12" lengthAdjust="spacingAndGlyphs" class="value">Games, ricing, tinkering</text>
-      <path d="M18 365H8V415M8 390h10M8 415h10" fill="none" stroke="currentColor" opacity=".76" stroke-width="1.5" />
-      <path d="M1 347v-8H177.4 M290.6 339H467v8 M1 431v8H467v-8" fill="none" stroke="#58666a" class="frame" stroke-width="1.5" />
+      <text x="221" y="396" fill="#d3c6aa" textLength="215.94" lengthAdjust="spacingAndGlyphs" class="value">Servers, networking,</text>
+      <text x="221" y="421" fill="#d3c6aa" textLength="32.39" lengthAdjust="spacingAndGlyphs" class="value">HPC</text>
+      <path d="M6 6h8q2.5 0 3.2 3l1.2 5q.6 4-2.4 2l-3-3H7l-3 3q-3 2-2.4-2l1.2-5Q3.5 6 6 6Z M6 8v4m-2-2h4m4-1h.3m1.8 2h.3" transform="translate(25 431) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      <text x="51" y="446" fill="currentColor" textLength="129.56" lengthAdjust="spacingAndGlyphs">Side quests:</text>
+      <text x="221" y="446" fill="#d3c6aa" textLength="151.16" lengthAdjust="spacingAndGlyphs" class="value">Games, ricing,</text>
+      <text x="221" y="471" fill="#d3c6aa" textLength="97.17" lengthAdjust="spacingAndGlyphs" class="value">tinkering</text>
+      <path d="M18 365H8V440M8 390h10M8 440h10" fill="none" stroke="currentColor" opacity=".76" stroke-width="1.5" />
+      <path d="M1 347v-8H177.4 M290.6 339H467v8 M1 481v8H467v-8" fill="none" stroke="#58666a" class="frame" stroke-width="1.5" />
     </g>
     <g class="projects" color="#7fbbb3">
-      <text x="234.0" y="472" fill="#9caeac" textLength="86.38" lengthAdjust="spacingAndGlyphs" class="heading" text-anchor="middle">Projects</text>
-      <path d="m2 4 5-2 6 3 5-2v13l-5 2-6-3-5 2z M7 2v13m6-10v13" transform="translate(25 483) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-      <text x="51" y="498" fill="currentColor" textLength="118.77" lengthAdjust="spacingAndGlyphs">Wits World:</text>
-      <text x="182" y="498" fill="#d3c6aa" textLength="248.33" lengthAdjust="spacingAndGlyphs" class="value">Campus exploration game</text>
-      <path d="m10 2 8 4.5v8L10 19l-8-4.5v-8z M2 6.5l8 4.5 8-4.5M10 11v8" transform="translate(25 508) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-      <text x="51" y="523" fill="currentColor" textLength="97.17" lengthAdjust="spacingAndGlyphs">Specimen:</text>
-      <text x="182" y="523" fill="#d3c6aa" textLength="215.94" lengthAdjust="spacingAndGlyphs" class="value">3D puzzle-platformer</text>
-      <path d="M7.5 2.5h5v5h5v5h-5v5h-5v-5h-5v-5h5z" transform="translate(25 533) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-      <text x="51" y="548" fill="currentColor" textLength="64.78" lengthAdjust="spacingAndGlyphs">VitaQ:</text>
-      <text x="182" y="548" fill="#d3c6aa" textLength="269.92" lengthAdjust="spacingAndGlyphs" class="value">Clinic booking and queues</text>
-      <path d="M2 3.5h16v13H2z M8 7l5 3-5 3z" transform="translate(25 558) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-      <text x="51" y="573" fill="currentColor" textLength="53.98" lengthAdjust="spacingAndGlyphs">Miru:</text>
-      <text x="182" y="573" fill="#d3c6aa" textLength="97.17" lengthAdjust="spacingAndGlyphs" class="value">Anime TUI</text>
-      <path d="M18 492H8V567M8 517h10M8 542h10M8 567h10" fill="none" stroke="currentColor" opacity=".76" stroke-width="1.5" />
-      <path d="M1 474v-8H182.8 M285.2 466H467v8 M1 583v8H467v-8" fill="none" stroke="#58666a" class="frame" stroke-width="1.5" />
+      <text x="234.0" y="522" fill="#9caeac" textLength="86.38" lengthAdjust="spacingAndGlyphs" class="heading" text-anchor="middle">Projects</text>
+      <path d="m2 4 5-2 6 3 5-2v13l-5 2-6-3-5 2z M7 2v13m6-10v13" transform="translate(25 533) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      <text x="51" y="548" fill="currentColor" textLength="118.77" lengthAdjust="spacingAndGlyphs">Wits World:</text>
+      <text x="221" y="548" fill="#d3c6aa" textLength="194.34" lengthAdjust="spacingAndGlyphs" class="value">Campus exploration</text>
+      <text x="221" y="573" fill="#d3c6aa" textLength="43.19" lengthAdjust="spacingAndGlyphs" class="value">game</text>
+      <path d="m10 2 8 4.5v8L10 19l-8-4.5v-8z M2 6.5l8 4.5 8-4.5M10 11v8" transform="translate(25 583) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      <text x="51" y="598" fill="currentColor" textLength="97.17" lengthAdjust="spacingAndGlyphs">Specimen:</text>
+      <text x="221" y="598" fill="#d3c6aa" textLength="215.94" lengthAdjust="spacingAndGlyphs" class="value">3D puzzle-platformer</text>
+      <path d="M7.5 2.5h5v5h5v5h-5v5h-5v-5h-5v-5h5z" transform="translate(25 608) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      <text x="51" y="623" fill="currentColor" textLength="64.78" lengthAdjust="spacingAndGlyphs">VitaQ:</text>
+      <text x="221" y="623" fill="#d3c6aa" textLength="194.34" lengthAdjust="spacingAndGlyphs" class="value">Clinic booking and</text>
+      <text x="221" y="648" fill="#d3c6aa" textLength="64.78" lengthAdjust="spacingAndGlyphs" class="value">queues</text>
+      <path d="M2 3.5h16v13H2z M8 7l5 3-5 3z" transform="translate(25 658) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      <text x="51" y="673" fill="currentColor" textLength="53.98" lengthAdjust="spacingAndGlyphs">Miru:</text>
+      <text x="221" y="673" fill="#d3c6aa" textLength="97.17" lengthAdjust="spacingAndGlyphs" class="value">Anime TUI</text>
+      <path d="M18 542H8V667M8 592h10M8 617h10M8 667h10" fill="none" stroke="currentColor" opacity=".76" stroke-width="1.5" />
+      <path d="M1 524v-8H182.8 M285.2 516H467v8 M1 683v8H467v-8" fill="none" stroke="#58666a" class="frame" stroke-width="1.5" />
     </g>
     <g class="github-stats" color="#d699b6">
       <desc>Commits are unique authored commits on the public default branches scanned. Lines of code shows net lines (additions minus deletions) in those commits, excluding merges.</desc>
-      <text x="234.0" y="624" fill="#9caeac" textLength="129.56" lengthAdjust="spacingAndGlyphs" class="heading" text-anchor="middle">GitHub stats</text>
-      <path d="M4 3h12v14H5.5a2 2 0 0 1 0-4H16 M4 15V3m3 3h5" transform="translate(25 635) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-      <text x="51" y="650" fill="currentColor" textLength="64.78" lengthAdjust="spacingAndGlyphs">Repos:</text>
-      <text x="225" y="650" fill="#d3c6aa" textLength="97.17" lengthAdjust="spacingAndGlyphs" class="value">10 public</text>
-      <path d="M2 10h4m8 0h4M14 10a4 4 0 1 1-8 0 4 4 0 1 1 8 0Z" transform="translate(25 660) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-      <text x="51" y="675" fill="currentColor" textLength="86.38" lengthAdjust="spacingAndGlyphs">Commits:</text>
-      <text x="225" y="675" fill="#d3c6aa" textLength="32.39" lengthAdjust="spacingAndGlyphs" class="value">810</text>
-      <path d="M11 6a3 3 0 1 1-6 0 3 3 0 1 1 6 0Z M2 17q0-5 6-5t6 5m2-11v6m-3-3h6" transform="translate(25 685) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-      <text x="51" y="700" fill="currentColor" textLength="107.97" lengthAdjust="spacingAndGlyphs">Followers:</text>
-      <text x="225" y="700" fill="#d3c6aa" textLength="10.80" lengthAdjust="spacingAndGlyphs" class="value">9</text>
-      <path d="M11 1.5c1 5-4 6-3 10 2-1 3-2 4-5 4 3 5 6 3 9a6 6 0 0 1-11-2C3 9 8 7 11 1.5Z" transform="translate(25 710) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-      <text x="51" y="725" fill="currentColor" textLength="161.95" lengthAdjust="spacingAndGlyphs">Longest streak:</text>
-      <text x="225" y="725" fill="#d3c6aa" textLength="75.58" lengthAdjust="spacingAndGlyphs" class="value">16 days</text>
-      <path d="M3 4h14v13H3z M6 2v4m8-4v4M3 8h14m-11 3h2m3 0h2m-7 3h2" transform="translate(25 735) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-      <text x="51" y="750" fill="currentColor" textLength="129.56" lengthAdjust="spacingAndGlyphs">Active days:</text>
-      <text x="225" y="750" fill="#d3c6aa" textLength="215.94" lengthAdjust="spacingAndGlyphs" class="value">149 in the past year</text>
-      <path d="m6 6-4 4 4 4m8-8 4 4-4 4m-3-11L8 17" transform="translate(25 760) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-      <text x="51" y="775" fill="currentColor" textLength="151.16" lengthAdjust="spacingAndGlyphs">Lines of code:</text>
-      <text x="225" y="775" fill="#d3c6aa" textLength="75.58" lengthAdjust="spacingAndGlyphs" class="value">716,526</text>
-      <text x="222.46875" y="800" fill="#d3c6aa" textLength="237.53" lengthAdjust="spacingAndGlyphs" class="value">(<tspan class="added" fill="#a7c080">+1,207,178</tspan>, <tspan class="deleted" fill="#e67e80">−490,652</tspan>)</text>
-      <path d="M18 644H8V769M8 669h10M8 694h10M8 719h10M8 744h10M8 769h10" fill="none" stroke="currentColor" opacity=".76" stroke-width="1.5" />
-      <path d="M1 626v-8H161.2 M306.8 618H467v8 M1 810v8H467v-8" fill="none" stroke="#58666a" class="frame" stroke-width="1.5" />
+      <text x="234.0" y="724" fill="#9caeac" textLength="129.56" lengthAdjust="spacingAndGlyphs" class="heading" text-anchor="middle">GitHub stats</text>
+      <path d="M4 3h12v14H5.5a2 2 0 0 1 0-4H16 M4 15V3m3 3h5" transform="translate(25 735) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      <text x="51" y="750" fill="currentColor" textLength="64.78" lengthAdjust="spacingAndGlyphs">Repos:</text>
+      <text x="221" y="750" fill="#d3c6aa" textLength="97.17" lengthAdjust="spacingAndGlyphs" class="value">10 public</text>
+      <path d="M2 10h4m8 0h4M14 10a4 4 0 1 1-8 0 4 4 0 1 1 8 0Z" transform="translate(25 760) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      <text x="51" y="775" fill="currentColor" textLength="86.38" lengthAdjust="spacingAndGlyphs">Commits:</text>
+      <text x="221" y="775" fill="#d3c6aa" textLength="32.39" lengthAdjust="spacingAndGlyphs" class="value">810</text>
+      <path d="M11 6a3 3 0 1 1-6 0 3 3 0 1 1 6 0Z M2 17q0-5 6-5t6 5m2-11v6m-3-3h6" transform="translate(25 785) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      <text x="51" y="800" fill="currentColor" textLength="107.97" lengthAdjust="spacingAndGlyphs">Followers:</text>
+      <text x="221" y="800" fill="#d3c6aa" textLength="10.80" lengthAdjust="spacingAndGlyphs" class="value">9</text>
+      <path d="M11 1.5c1 5-4 6-3 10 2-1 3-2 4-5 4 3 5 6 3 9a6 6 0 0 1-11-2C3 9 8 7 11 1.5Z" transform="translate(25 810) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      <text x="51" y="825" fill="currentColor" textLength="161.95" lengthAdjust="spacingAndGlyphs">Longest streak:</text>
+      <text x="221" y="825" fill="#d3c6aa" textLength="75.58" lengthAdjust="spacingAndGlyphs" class="value">16 days</text>
+      <path d="M3 4h14v13H3z M6 2v4m8-4v4M3 8h14m-11 3h2m3 0h2m-7 3h2" transform="translate(25 835) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      <text x="51" y="850" fill="currentColor" textLength="129.56" lengthAdjust="spacingAndGlyphs">Active days:</text>
+      <text x="221" y="850" fill="#d3c6aa" textLength="215.94" lengthAdjust="spacingAndGlyphs" class="value">149 in the past year</text>
+      <path d="m6 6-4 4 4 4m8-8 4 4-4 4m-3-11L8 17" transform="translate(25 860) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      <text x="51" y="875" fill="currentColor" textLength="151.16" lengthAdjust="spacingAndGlyphs">Lines of code:</text>
+      <text x="221" y="875" fill="#d3c6aa" textLength="75.58" lengthAdjust="spacingAndGlyphs" class="value">716,526</text>
+      <text x="221" y="900" fill="#d3c6aa" textLength="237.53" lengthAdjust="spacingAndGlyphs" class="value">(<tspan class="added" fill="#a7c080">+1,207,178</tspan>, <tspan class="deleted" fill="#e67e80">−490,652</tspan>)</text>
+      <path d="M18 744H8V869M8 769h10M8 794h10M8 819h10M8 844h10M8 869h10" fill="none" stroke="currentColor" opacity=".76" stroke-width="1.5" />
+      <path d="M1 726v-8H161.2 M306.8 718H467v8 M1 910v8H467v-8" fill="none" stroke="#58666a" class="frame" stroke-width="1.5" />
     </g>
   </g>
 </svg>
