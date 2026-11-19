@@ -37,21 +37,21 @@ def animate_grid(parent, frames, starts, duration, **style):
 
 
 def pond_art(demo):
-    """Read the classic recording once for both card layouts."""
-    if demo.size != (956, 516):
-        raise ValueError("Expected the 956 × 516 Koi Fetch recording")
+    """Read the 60-column Braille pond from a classic Koi Fetch recording."""
+    if demo.size not in ((956, 516), (660, 1078)):
+        raise ValueError(f"Unexpected Koi Fetch recording dimensions: {demo.size}")
     group = ET.Element("g", fill="none", stroke="currentColor", attrib={"class": "pond"})
     # Each 11 × 22 terminal cell has two columns of four Braille dots.
     # The dash has a separate sample in the gap between adjacent Braille cells.
     columns = [x for x in range(660) if x % 11 in (2, 7)]
-    rows = [y for y in range(516) if y % 22 in (1, 7, 13, 17)]
+    rows = [y for y in range(demo.height) if y % 22 in (1, 7, 13, 17)]
     dots, prey, delays = [], [], []
     original_water = demo.convert("RGB").getpixel((0, 0))
     for frame in ImageSequence.Iterator(demo):
         rgb = frame.convert("RGB")
         pixels = rgb.load()
         dots.append(paths_for_grid(pixels, columns, rows, original_water))
-        prey.append(paths_for_grid(pixels, range(10, 660, 11), range(5, 516, 22), original_water))
+        prey.append(paths_for_grid(pixels, range(10, 660, 11), range(5, demo.height, 22), original_water))
         delays.append(frame.info["duration"])
     starts = list(accumulate(delays, initial=0))[:-1]
     animate_grid(group, dots, starts, sum(delays), transform="translate(.8 1.9) scale(5.5)",

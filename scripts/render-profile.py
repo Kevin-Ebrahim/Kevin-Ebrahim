@@ -1,4 +1,4 @@
-"""Render the desktop and mobile SVGs from the classic Koi Fetch recording.
+"""Render the desktop and mobile SVGs from portrait and landscape Koi Fetch recordings.
 
 Run: python scripts/render-profile.py ../koi-fetch/docs/demo.gif
 Optionally pass a monospace TTF path as the second argument.
@@ -173,7 +173,7 @@ def column(sections, width, font):
     return group, y - SECTION_GAP
 
 
-def render(shapes, font, sections, mobile):
+def render(recording, font, sections, mobile):
     if mobile:
         width = 500
         panel, panel_height = column(sections, width - 32, font)
@@ -183,9 +183,9 @@ def render(shapes, font, sections, mobile):
     else:
         width = 1100
         panel, panel_height = column(sections, 568, font)
-        height = max(panel_height, 375) + 36
-        panel_x, panel_y = 514, (height - panel_height) // 2
-        pond_box = (18, (height - 375) // 2, 480, 375)
+        height = panel_height + 36
+        panel_x, panel_y = 514, 18
+        pond_box = (18, 0, 480, height)
 
     svg = ET.Element("svg", xmlns="http://www.w3.org/2000/svg", width=str(width), height=str(height),
                      viewBox=f"0 0 {width} {height}", role="img", **{"aria-labelledby": "title",
@@ -196,8 +196,9 @@ def render(shapes, font, sections, mobile):
     ET.SubElement(svg, "rect", width="100%", height="100%", fill=BACKGROUND, attrib={"class": "canvas"})
     px, py, pw, ph = pond_box
     pond = ET.SubElement(svg, "svg", x=str(px), y=str(py), width=str(pw), height=str(ph),
-                         viewBox="0 0 660 516", preserveAspectRatio="none", **{"aria-hidden": "true"})
-    pond.append(shapes)
+                         viewBox=f"0 0 660 {recording.height}",
+                         preserveAspectRatio="none" if mobile else "xMidYMid meet", **{"aria-hidden": "true"})
+    pond.append(pond_art(recording))
     panel.set("transform", f"translate({panel_x} {panel_y})")
     svg.append(panel)
     ET.indent(svg)
@@ -208,7 +209,7 @@ def render(shapes, font, sections, mobile):
 if __name__ == "__main__":
     font = ImageFont.truetype(sys.argv[2] if len(sys.argv) > 2 else "JetBrainsMonoNerdFont-Regular.ttf", 18)
     sections = profile_sections(json.loads((ASSETS / "github-stats.json").read_text()))
-    with Image.open(sys.argv[1]) as demo:
-        shapes = pond_art(demo)
-    for mobile in (False, True):
-        render(shapes, font, sections, mobile)
+    with Image.open(ASSETS / "koi-portrait.gif") as portrait:
+        render(portrait, font, sections, mobile=False)
+    with Image.open(sys.argv[1]) as landscape:
+        render(landscape, font, sections, mobile=True)
