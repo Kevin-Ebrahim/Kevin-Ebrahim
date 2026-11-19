@@ -65,16 +65,15 @@ def public_stats():
         user(login: $login) {
           id createdAt followers { totalCount }
           repositories(first: 100, after: $endCursor, ownerAffiliations: OWNER, privacy: PUBLIC) {
-            nodes { nameWithOwner stargazerCount }
+            nodes { nameWithOwner }
             pageInfo { hasNextPage endCursor }
           }
         }
       }
     """, login=LOGIN)
     user = owned[0]["user"]
-    owned_stars = {repo["nameWithOwner"]: repo["stargazerCount"]
-                   for page in owned for repo in page["user"]["repositories"]["nodes"]}
-    repos = set(owned_stars)
+    repos = {repo["nameWithOwner"] for page in owned for repo in page["user"]["repositories"]["nodes"]}
+    owned_count = len(repos)
 
     start_year = int(user["createdAt"][:4])
     now = datetime.now(timezone.utc).replace(microsecond=0)
@@ -119,9 +118,8 @@ def public_stats():
                         deletions += commit["deletions"]
 
     return {
-        "public_repos": len(owned_stars),
+        "public_repos": owned_count,
         "commits": len(commit_ids),
-        "stars": sum(owned_stars.values()),
         "additions": additions,
         "deletions": deletions,
         "followers": user["followers"]["totalCount"],

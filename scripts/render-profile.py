@@ -57,7 +57,6 @@ def profile_sections(stats):
         "GitHub stats": ("#d699b6", [
             ("Repos", f"{stats['public_repos']:,} public"),
             ("Commits", f"{stats['commits']:,}"),
-            ("Stars", f"{stats['stars']:,}"),
             ("Followers", f"{stats['followers']:,}"),
             ("Longest streak", f"{streak:,} {day_unit}"),
             ("Active days", f"{stats['active_days_365']} in the past year"),
@@ -85,7 +84,6 @@ ICONS = {
     "Miru": "M2 3.5h16v13H2z M8 7l5 3-5 3z",
     "Repos": "M4 3h12v14H5.5a2 2 0 0 1 0-4H16 M4 15V3m3 3h5",
     "Commits": "M2 10h4m8 0h4M14 10a4 4 0 1 1-8 0 4 4 0 1 1 8 0Z",
-    "Stars": "m10 2 2.5 5.2 5.7.8-4.1 4 1 5.7-5.1-2.7-5.1 2.7 1-5.7-4.1-4 5.7-.8z",
     "Followers": "M11 6a3 3 0 1 1-6 0 3 3 0 1 1 6 0Z M2 17q0-5 6-5t6 5m2-11v6m-3-3h6",
     "Longest streak": "M11 1.5c1 5-4 6-3 10 2-1 3-2 4-5 4 3 5 6 3 9a6 6 0 0 1-11-2C3 9 8 7 11 1.5Z",
     "Active days": "M3 4h14v13H3z M6 2v4m8-4v4M3 8h14m-11 3h2m3 0h2m-7 3h2",
@@ -131,7 +129,7 @@ def column(sections, width, font):
         section = ET.SubElement(group, "g", color=accent, attrib={"class": title.lower().replace(" ", "-")})
         if title == "GitHub stats":
             ET.SubElement(section, "desc").text = (
-                "Stars received on owned public repositories. Commits are unique authored commits "
+                "Commits are unique authored commits "
                 "on the public default branches scanned. Lines of code shows net lines "
                 "(additions minus deletions) in those commits, excluding merges."
             )
