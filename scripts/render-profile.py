@@ -27,8 +27,8 @@ def profile_sections(stats):
     return {
         "Profile": ("#a7c080", [
             ("Name", "Kevin Ebrahim"),
-            ("Field", "Computer Science"),
-            ("University", "University Of The Witwatersrand"),
+            ("Field", "Computer science"),
+            ("University", "University of the Witwatersrand"),
             ("Editor", "Neovim"),
             ("OS", "Arch Linux"),
         ]),
@@ -37,22 +37,22 @@ def profile_sections(stats):
             ("Exploring", "Rust"),
         ]),
         "Interests": ("#dbbc7f", [
-            ("Software", "Linux, Open source, Cybersecurity"),
+            ("Software", "Linux, open source, cybersecurity"),
             ("Hardware", "Servers, networking, HPC"),
-            ("Side Quests", "Games, ricing, tinkering"),
+            ("Side quests", "Games, ricing, tinkering"),
         ]),
         "Projects": ("#7fbbb3", [
             ("Wits World", "Campus exploration game"),
             ("Specimen", "3D puzzle-platformer"),
-            ("VitaQ", "Clinic booking & queues"),
+            ("VitaQ", "Clinic booking and queues"),
             ("Miru", "Anime TUI"),
         ]),
-        "GitHub Stats": ("#d699b6", [
+        "GitHub stats": ("#d699b6", [
             ("Repos", f"{stats['public_repos']:,} public"),
             ("Commits", f"{stats['commits']:,}"),
             ("Followers", f"{stats['followers']:,}"),
             ("Longest streak", f"{streak:,} {day_unit}"),
-            ("Active days", f"{stats['active_days_365']} in the last 365"),
+            ("Active days", f"{stats['active_days_365']} in the past year"),
         ]),
     }
 
@@ -69,7 +69,7 @@ ICONS = {
     "Exploring": "M18 10a8 8 0 1 1-16 0 8 8 0 1 1 16 0Z m-5-3-2 5-4 1 2-5z",
     "Software": "M1.5 3.5h17v13h-17z M2 7.5h16M5 5.5h.2m2 0h.2",
     "Hardware": "M2 3h16v6H2z M2 11h16v6H2z M5 6h1m2 0h1m-4 8h1m2 0h1",
-    "Side Quests": "M6 6h8q2.5 0 3.2 3l1.2 5q.6 4-2.4 2l-3-3H7l-3 3q-3 2-2.4-2l1.2-5Q3.5 6 6 6Z M6 8v4m-2-2h4m4-1h.3m1.8 2h.3",
+    "Side quests": "M6 6h8q2.5 0 3.2 3l1.2 5q.6 4-2.4 2l-3-3H7l-3 3q-3 2-2.4-2l1.2-5Q3.5 6 6 6Z M6 8v4m-2-2h4m4-1h.3m1.8 2h.3",
     "Wits World": "m2 4 5-2 6 3 5-2v13l-5 2-6-3-5 2z M7 2v13m6-10v13",
     "Specimen": "m10 2 8 4.5v8L10 19l-8-4.5v-8z M2 6.5l8 4.5 8-4.5M10 11v8",
     "VitaQ": "M7.5 2.5h5v5h5v5h-5v5h-5v-5h-5v-5h5z",
@@ -148,7 +148,7 @@ def render(shapes, font, sections, mobile):
     else:
         width = 1100
         profile, profile_height = column(sections, ["Profile", "Languages", "Projects"], 568, font)
-        stats, stats_height = column(sections, ["GitHub Stats"], 568, font)
+        stats, stats_height = column(sections, ["GitHub stats"], 568, font)
         interests, interests_height = column(sections, ["Interests"], 480, font, min_section_height=stats_height)
         upper_height = max(375, profile_height)
         lower_y = 18 + upper_height + SECTION_GAP
