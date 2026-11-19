@@ -35,7 +35,7 @@ jobs:
 
       - name: Save changes
         run: |
-          git add -- assets/github-stats.json assets/profile.gif assets/profile-mobile.gif
+          git add -- assets/github-stats.json assets/profile.svg assets/profile-mobile.svg
           if ! git diff --cached --quiet; then
             git config user.name 'github-actions[bot]'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'

@@ -1,4 +1,4 @@
-"""Render the README from koi-fetch's classic demo with Pillow.
+"""Render the desktop and mobile SVGs from the classic Koi Fetch recording.
 
 Run: python scripts/render-profile.py ../koi-fetch/docs/demo.gif
 Optionally pass a monospace TTF path as the second argument.
@@ -8,8 +8,11 @@ import json
 from pathlib import Path
 import sys
 import textwrap
+from xml.etree import ElementTree as ET
 
-from PIL import Image, ImageChops, ImageDraw, ImageFont, ImageSequence
+from PIL import Image, ImageFont
+
+from pond import pond_art
 
 BACKGROUND = "#2c343a"
 FOREGROUND = "#d3c6aa"
@@ -29,7 +32,7 @@ def profile_sections(stats):
             ("Editor", "Neovim"),
             ("OS", "Omarchy · Arch Linux"),
         ]),
-        "Languages": ("#a7c080", [
+        "Languages": ("#83c092", [
             ("Programming", "Python, C++, TypeScript"),
             ("Scripting", "Bash"),
             ("Exploring", "Rust"),
@@ -55,91 +58,121 @@ def profile_sections(stats):
     }
 
 
-def details(font, width, sections, titles):
-    margin = 5
-    row_height = font.size + 5
-    label_width = max(font.getlength(label) for title in titles for label, _ in sections[title][1])
-    value_x = round(label_width) + margin + 22
-    value_columns = int((width - value_x - margin) / font.getlength("M"))
-    rows = []
+# Each field has a 20 × 20 stroke icon. Paths keep the terminal symbols
+# visible in an embedded SVG, including on machines without a Nerd Font.
+ICONS = {
+    "Name": "M3 17c0-3 3-5 7-5s7 2 7 5 M13 6a3 3 0 1 1-6 0 3 3 0 1 1 6 0Z",
+    "Field": "M6 5h8v10H6z M8 2v3m4-3v3M8 15v3m4-3v3M3 8h3m-3 4h3m8-4h3m-3 4h3",
+    "University": "M1.5 7 10 3l8.5 4-8.5 4z M5 9v5q5 4 10 0V9m3-2v6",
+    "Community": "M12 6a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z M3 16q0-5 6.5-5t6.5 5 M14 4q4 1 2 5m-.5 2q3 1 3 4",
+    "Editor": "m3 13 9-9 4 4-9 9-5 1z M10 6l4 4",
+    "OS": "M3 3h14v11H3z M1 17h18",
+    "Programming": "m6 5-5 5 5 5m8-10 5 5-5 5m-3-12L8 17",
+    "Scripting": "M2 3h16v14H2z M5 7l3 3-3 3m5 0h4",
+    "Exploring": "M18 10a8 8 0 1 1-16 0 8 8 0 1 1 16 0Z m-5-3-2 5-4 1 2-5z",
+    "Software": "M1.5 3.5h17v13h-17z M2 7.5h16M5 5.5h.2m2 0h.2",
+    "Hardware": "M2 3h16v6H2z M2 11h16v6H2z M5 6h1m2 0h1m-4 8h1m2 0h1",
+    "Side Quests": "M6 6h8q2.5 0 3.2 3l1.2 5q.6 4-2.4 2l-3-3H7l-3 3q-3 2-2.4-2l1.2-5Q3.5 6 6 6Z M6 8v4m-2-2h4m4-1h.3m1.8 2h.3",
+    "Wits World": "m2 4 5-2 6 3 5-2v13l-5 2-6-3-5 2z M7 2v13m6-10v13",
+    "Specimen": "m10 2 8 4.5v8L10 19l-8-4.5v-8z M2 6.5l8 4.5 8-4.5M10 11v8",
+    "VitaQ": "M7.5 2.5h5v5h5v5h-5v5h-5v-5h-5v-5h5z",
+    "Miru": "M2 3.5h16v13H2z M8 7l5 3-5 3z",
+    "Repos": "M4 3h12v14H5.5a2 2 0 0 1 0-4H16 M4 15V3m3 3h5",
+    "Commits": "M2 10h4m8 0h4M14 10a4 4 0 1 1-8 0 4 4 0 1 1 8 0Z",
+    "Followers": "M11 6a3 3 0 1 1-6 0 3 3 0 1 1 6 0Z M2 17q0-5 6-5t6 5m2-11v6m-3-3h6",
+    "Longest streak": "M11 1.5c1 5-4 6-3 10 2-1 3-2 4-5 4 3 5 6 3 9a6 6 0 0 1-11-2C3 9 8 7 11 1.5Z",
+    "Active days": "M3 4h14v13H3z M6 2v4m8-4v4M3 8h14m-11 3h2m3 0h2m-7 3h2",
+}
+
+
+def text_at(parent, x, y, value, font, colour, **attrs):
+    element = ET.SubElement(parent, "text", x=str(x), y=str(y), fill=colour,
+                            textLength=f"{font.getlength(value):.2f}",
+                            lengthAdjust="spacingAndGlyphs", **attrs)
+    element.text = value
+
+
+def column(sections, titles, width, font):
+    """Draw open terminal frames with values aligned inside each section."""
+    group = ET.Element("g")
+    label_x = 51
     y = 0
     for title in titles:
         accent, fields = sections[title]
-        if rows:
-            y += 13
-        rows.append((y, title, None, accent))
-        y += row_height + 3
-        for key, value in fields:
-            for index, line in enumerate(textwrap.wrap(value, width=value_columns)):
-                rows.append((y, key if index == 0 else "", line, accent))
-                y += row_height
+        key_width = max(font.getlength(f"{key}:") for key, _ in fields)
+        value_x = label_x + round(key_width) + 12
+        wrap_at = int((width - value_x - 6) / font.getlength("M"))
+        section = ET.SubElement(group, "g")
+        middle = width / 2
+        gap = font.getlength(title) / 2 + 8
+        header_y = y + 10
+        border = f"M1 {header_y + 8}v-8H{middle-gap:.1f} M{middle+gap:.1f} {header_y}H{width-1}v8"
+        text_at(section, middle, y + 16, title, font, "#9caeac", **{"text-anchor": "middle"})
+        y += 42
+        branches = []
+        for label, value in fields:
+            center_y = y - 6
+            branches.append(center_y)
+            ET.SubElement(section, "path", d=ICONS[label],
+                          transform=f"translate(25 {center_y-9}) scale(.9)",
+                          fill="none", stroke=accent, **{"stroke-width": "1.6",
+                          "stroke-linecap": "round", "stroke-linejoin": "round"})
+            text_at(section, label_x, y, f"{label}:", font, accent)
+            for line in textwrap.wrap(value, width=wrap_at):
+                text_at(section, value_x, y, line, font, FOREGROUND)
+                y += 25
+        tree = f"M18 {branches[0]}H8V{branches[-1]}"
+        tree += "".join(f"M8 {center}h10" for center in branches[1:])
+        ET.SubElement(section, "path", d=tree, fill="none", stroke=accent,
+                      opacity=".76", **{"stroke-width": "1.5"})
+        bottom = y - 7
+        border += f" M1 {bottom-8}v8H{width-1}v-8"
+        ET.SubElement(section, "path", d=border, fill="none", stroke=SECTION_LINE,
+                      **{"stroke-width": "1.5"})
+        y = bottom + 17
+    return group, y - 16
 
-    panel = Image.new("RGB", (width, y), BACKGROUND)
-    draw = ImageDraw.Draw(panel)
-    for top, label, value, accent in rows:
-        center = top + row_height // 2
-        if value is None:
-            draw.text((0, center), label, font=font, fill=FOREGROUND, anchor="lm")
-            line_start = round(font.getlength(label)) + 13
-            draw.line((line_start, center, width - margin, center), fill=SECTION_LINE)
-        else:
-            draw.text((margin, center), label, font=font, fill=accent, anchor="lm")
-            draw.text((value_x, center), value, font=font, fill=FOREGROUND, anchor="lm")
-    return panel
 
+def render(shapes, font, sections, mobile):
+    if mobile:
+        width = 500
+        panel, panel_height = column(sections, sections, width - 32, font)
+        panel_y = 316
+        height = panel_y + panel_height + 16
+        panels = [(panel, 16, panel_y)]
+        pond_box = (53, 0, 394, 308)
+    else:
+        width = 1100
+        interests, interests_height = column(sections, ["Interests"], 480, font)
+        profile, profile_height = column(sections, ["Profile", "Languages", "Projects", "GitHub Stats"], 568, font)
+        left_height = 375 + 12 + interests_height
+        height = max(left_height, profile_height) + 36
+        top = (height - left_height) // 2
+        panels = [(interests, 18, top + 387), (profile, 514, 18)]
+        pond_box = (18, top, 480, 375)
 
-def render(demo_file, font, sections, mobile):
-    with Image.open(demo_file) as demo:
-        # The 956 × 516 upstream recording places its first text column at x=676.
-        if demo.size != (956, 516):
-            raise ValueError("The upstream demo layout has changed. Check the pond crop.")
-        pond_box = (0, 0, 660, 516)
-        if mobile:
-            panel = details(font, 508, sections, sections.keys())
-            pond_size = (394, 308)
-            base = Image.new("RGB", (540, 308 + panel.height + 18), BACKGROUND)
-            pond_origin = ((base.width - pond_size[0]) // 2, 0)
-            base.paste(panel, (16, 308))
-        else:
-            left = details(font, 480, sections, ["Interests"])
-            right = details(font, 568, sections, ["Profile", "Languages", "Projects", "GitHub Stats"])
-            pond_size = (480, 375)
-            left_height = pond_size[1] + 12 + left.height
-            height = max(left_height, right.height) + 36
-            base = Image.new("RGB", (1100, height), BACKGROUND)
-            top = (height - left_height) // 2
-            pond_origin = (18, top)
-            base.paste(left, (18, top + pond_size[1] + 12))
-            base.paste(right, (514, 18))
-
-        original_water = Image.new("RGB", (660, 516), demo.convert("RGB").getpixel((0, 0)))
-        water = Image.new("RGB", original_water.size, BACKGROUND)
-        durations = []
-
-        def frames():
-            for frame in ImageSequence.Iterator(demo):
-                durations.append(frame.info["duration"])
-                pond = frame.convert("RGB").crop(pond_box)
-                ink = ImageChops.difference(pond, original_water).convert("L").point([0] + [255] * 255)
-                pond = Image.composite(pond, water, ink).resize(pond_size, Image.Resampling.BOX)
-                card = base.copy()
-                card.paste(pond, pond_origin)
-                yield card
-
-        sequence = frames()
-        first = next(sequence)
-        palette = first.quantize(colors=256)
-        # Fix the palette across frames so stationary text keeps exactly the same pixels.
-        rest = (card.quantize(palette=palette, dither=Image.Dither.NONE) for card in sequence)
-        first = first.quantize(palette=palette, dither=Image.Dither.NONE)
-        name = "profile-mobile.gif" if mobile else "profile.gif"
-        first.save(ASSETS / name, save_all=True, append_images=rest, duration=durations,
-                   loop=0, disposal=1, optimize=True)
+    svg = ET.Element("svg", xmlns="http://www.w3.org/2000/svg", width=str(width), height=str(height),
+                     viewBox=f"0 0 {width} {height}", role="img", **{"aria-labelledby": "title",
+                     "font-family": "'JetBrains Mono','JetBrainsMono Nerd Font',monospace",
+                     "font-size": str(font.size)})
+    ET.SubElement(svg, "title", id="title").text = "Kevin Ebrahim’s profile with an animated Koi Fetch pond"
+    ET.SubElement(svg, "rect", width="100%", height="100%", fill=BACKGROUND)
+    px, py, pw, ph = pond_box
+    pond = ET.SubElement(svg, "svg", x=str(px), y=str(py), width=str(pw), height=str(ph),
+                         viewBox="0 0 660 516", preserveAspectRatio="none", **{"aria-hidden": "true"})
+    pond.append(shapes)
+    for panel, x, y in panels:
+        panel.set("transform", f"translate({x} {y})")
+        svg.append(panel)
+    ET.indent(svg)
+    filename = "profile-mobile.svg" if mobile else "profile.svg"
+    ET.ElementTree(svg).write(ASSETS / filename, encoding="utf-8", xml_declaration=True)
 
 
 if __name__ == "__main__":
     font = ImageFont.truetype(sys.argv[2] if len(sys.argv) > 2 else "JetBrainsMonoNerdFont-Regular.ttf", 18)
-    stats = json.loads((ASSETS / "github-stats.json").read_text(encoding="utf-8"))
-    sections = profile_sections(stats)
+    sections = profile_sections(json.loads((ASSETS / "github-stats.json").read_text()))
+    with Image.open(sys.argv[1]) as demo:
+        shapes = pond_art(demo)
     for mobile in (False, True):
-        render(sys.argv[1], font, sections, mobile)
+        render(shapes, font, sections, mobile)
