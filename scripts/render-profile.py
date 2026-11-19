@@ -89,7 +89,7 @@ def text_at(parent, x, y, value, font, colour, **attrs):
     element.text = value
 
 
-def column(sections, titles, width, font):
+def column(sections, titles, width, font, min_section_height=0):
     """Draw open terminal frames with values aligned inside each section."""
     group = ET.Element("g")
     label_x = 51
@@ -105,24 +105,31 @@ def column(sections, titles, width, font):
         header_y = y + 10
         border = f"M1 {header_y + 8}v-8H{middle-gap:.1f} M{middle+gap:.1f} {header_y}H{width-1}v8"
         text_at(section, middle, y + 16, title, font, "#9caeac", **{"text-anchor": "middle"})
+        section_top = y
         y += 42
+        rows = [(label, textwrap.wrap(value, width=wrap_at)) for label, value in fields]
+        line_height = 25
+        natural_bottom = y + line_height * sum(len(lines) for _, lines in rows) - 7
+        bottom = max(natural_bottom, section_top + min_section_height - 1)
+        extra = bottom - natural_bottom
         branches = []
-        for label, value in fields:
-            center_y = y - 6
+        for index, (label, lines) in enumerate(rows):
+            # Spread spare height between fields, keeping wrapped lines together.
+            baseline = y + extra * index // max(1, len(rows) - 1)
+            center_y = baseline - 6
             branches.append(center_y)
             ET.SubElement(section, "path", d=ICONS[label],
                           transform=f"translate(25 {center_y-9}) scale(.9)",
                           fill="none", stroke=accent, **{"stroke-width": "1.6",
                           "stroke-linecap": "round", "stroke-linejoin": "round"})
-            text_at(section, label_x, y, f"{label}:", font, accent)
-            for line in textwrap.wrap(value, width=wrap_at):
-                text_at(section, value_x, y, line, font, FOREGROUND)
-                y += 25
+            text_at(section, label_x, baseline, f"{label}:", font, accent)
+            for line_number, line in enumerate(lines):
+                text_at(section, value_x, baseline + line_number * line_height, line, font, FOREGROUND)
+            y += len(lines) * line_height
         tree = f"M18 {branches[0]}H8V{branches[-1]}"
         tree += "".join(f"M8 {center}h10" for center in branches[1:])
         ET.SubElement(section, "path", d=tree, fill="none", stroke=accent,
                       opacity=".76", **{"stroke-width": "1.5"})
-        bottom = y - 7
         border += f" M1 {bottom-8}v8H{width-1}v-8"
         ET.SubElement(section, "path", d=border, fill="none", stroke=SECTION_LINE,
                       **{"stroke-width": "1.5"})
@@ -140,9 +147,9 @@ def render(shapes, font, sections, mobile):
         pond_box = (53, 0, 394, 308)
     else:
         width = 1100
-        interests, interests_height = column(sections, ["Interests"], 480, font)
         profile, profile_height = column(sections, ["Profile", "Languages", "Projects"], 568, font)
         stats, stats_height = column(sections, ["GitHub Stats"], 568, font)
+        interests, interests_height = column(sections, ["Interests"], 480, font, min_section_height=stats_height)
         upper_height = max(375, profile_height)
         lower_y = 18 + upper_height + SECTION_GAP
         height = lower_y + max(interests_height, stats_height) + 18
