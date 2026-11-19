@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="132" height="36" viewBox="0 0 132 36" role="img" aria-labelledby="title">
+  <title id="title">Miru</title>
+  <style>
+    svg { color: #d699b6; --surface: #2c343a; --ink: #e3d8c3; }
+    @media (prefers-color-scheme: light) {
+      svg { color: #895376; --surface: #f8faf7; --ink: #35463d; }
+    }
+  </style>
+  <path d="M6 1h120l5 5v24l-5 5H6l-5-5V6z" fill="var(--surface)" stroke="currentColor" stroke-opacity=".6"/>
+  <path d="M6 2h30v32H6l-4-4V6z" fill="currentColor" opacity=".13"/>
+  <path d="M36.5 2v32" stroke="currentColor" opacity=".4"/>
+  <g transform="translate(6 6)" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="2" y="3.5" width="21" height="17" rx="2" fill="none"/>
+    <path d="M2 8h21" opacity=".7"/>
+    <path d="M5.5 5.8h1m2 0h1" stroke-linecap="round"/>
+    <path d="m10 10.5 6 3.8-6 3.8z" fill="currentColor" stroke="none"/>
+  </g>
+  <text x="83" y="22.5" text-anchor="middle" font-family="'JetBrains Mono',ui-monospace,monospace" font-size="13" font-weight="600" fill="var(--ink)">Miru</text>
+</svg>
