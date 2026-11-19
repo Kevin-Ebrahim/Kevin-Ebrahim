@@ -12,78 +12,108 @@ from PIL import Image, ImageChops, ImageDraw, ImageFont, ImageSequence
 BACKGROUND = "#2c343a"
 FOREGROUND = "#d3c6aa"
 SECTION_LINE = "#58666a"
+# Snapshot of public profile data on 19 November 2026. Commit and line totals
+# count distinct, author-linked commits on public default branches in Kevin's
+# owned repos and repos with a credited commit contribution since signup.
 SECTIONS = [
-    ("Profile", "#a7c080", [
+    ("kevin@omarchy", "#a7c080", [
         ("Name", "Kevin Ebrahim"),
-        ("Focus", "Terminal apps and Linux tools"),
-        ("Code", "Rust · Python · Go"),
+        ("Field", "Computer Science · HPC"),
+        ("OS", "Omarchy 4.5.0 · Arch Linux"),
+        ("Uptime", "4y 7m 8d on GitHub"),
+        ("Host", "Dell Latitude 9410"),
+        ("Kernel", "Linux 7.2.15-1-omarchy"),
+        ("IDE", "Neovim 0.12.6"),
+        ("Languages.Programming", "Python, C++"),
+        ("Languages.Computer", "HTML, CSS, TOML, YAML"),
+        ("Languages.Real", "—"),
+        ("Hobbies.Software", "Terminal apps, Linux customization"),
+        ("Hobbies.Hardware", "HPC clusters"),
     ]),
-    ("Workstation", "#7fbbb3", [
-        ("Machine", "Dell Latitude 9410"),
-        ("Desktop", "Omarchy · Hyprland"),
-        ("Tools", "kitty · Neovim"),
-        ("Theme", "Everforest"),
+    ("Contact", "#7fbbb3", [
+        ("GitHub", "github.com/Kevin-Ebrahim"),
+        ("Email.Personal", "—"),
+        ("Email.Work", "—"),
+        ("LinkedIn", "—"),
+        ("Discord", "—"),
     ]),
-    ("Projects", "#d699b6", [
-        ("koi-fetch", "Animated terminal koi pond"),
-        ("miru", "Terminal anime browser"),
-        ("gh-tune", "GitHub repository settings"),
+    ("GitHub Stats · 19 Nov 2026", "#d699b6", [
+        ("Repos", "11 public · 14 contributed to"),
+        ("Stars", "0 received"),
+        ("Commits", "810 on public default branches"),
+        ("Followers", "9"),
+        ("Lines of Code", "955,670 net"),
+        ("Lines added / deleted", "+1,502,010 / −546,340"),
     ]),
 ]
-SWATCHES = ["#d3c6aa", "#a7c080", "#83c092", "#7fbbb3", "#dbbc7f", "#d699b6", "#e67e80"]
-PANEL_WIDTH = 614
 ASSETS = Path(__file__).resolve().parents[1] / "assets"
 
 
-def details(font):
-    height = sum(55 + len(rows) * 29 for _, _, rows in SECTIONS) - 11
-    panel = Image.new("RGB", (PANEL_WIDTH, height), BACKGROUND)
+def details(font, width):
+    margin = 6
+    row_height = font.size + 6
+    # A mobile row can put its value on a second line. Measure the layout
+    # first so longer handles and contact details fit in the finished card.
+    rows = []
+    y = 0
+    for title, accent, fields in SECTIONS:
+        if rows:
+            y += 13
+        rows.append((y, accent, title, None))
+        y += row_height + 4
+        previous_group = None
+        for key, value in fields:
+            group = key.partition(".")[0] if "." in key else ""
+            if previous_group is not None and group != previous_group:
+                y += 6
+            previous_group = group
+            right = width - margin
+            label_width = font.getlength(key)
+            if label_width + font.getlength(value) + 4 * font.getlength(" ") > right - margin:
+                rows.append((y, accent, key, ""))
+                y += row_height
+                rows.append((y, accent, "", value))
+            else:
+                rows.append((y, accent, key, value))
+            y += row_height
+
+    panel = Image.new("RGB", (width, y), BACKGROUND)
     draw = ImageDraw.Draw(panel)
-    y = 2
-    for title, accent, rows in SECTIONS:
-        middle = PANEL_WIDTH // 2
-        gap = draw.textlength(title, font=font) / 2 + 12
-        draw.line([(0, y + 19), (0, y + 11), (middle - gap, y + 11)], SECTION_LINE, 2)
-        draw.line([(middle + gap, y + 11), (PANEL_WIDTH - 1, y + 11),
-                   (PANEL_WIDTH - 1, y + 19)], SECTION_LINE, 2)
-        draw.text((middle, y + 10), title, font=font, fill="#b1bdba", anchor="mm")
-        y += 33
-        for index, (label, value) in enumerate(rows):
-            row_middle = y + 10
-            draw.line((7, y - 5, 7, row_middle), accent, 1)
-            if index + 1 < len(rows):
-                draw.line((7, row_middle, 7, y + 25), accent, 1)
-            draw.line((7, row_middle, 16, row_middle), accent, 1)
-            draw.text((26, row_middle), label, font=font, fill=accent, anchor="lm")
-            draw.text((172, row_middle), value, font=font, fill=FOREGROUND, anchor="lm")
-            if label == "Theme":
-                x = round(172 + draw.textlength(value, font=font)) + 18
-                for swatch in SWATCHES:
-                    draw.ellipse((x, row_middle - 5, x + 10, row_middle + 5), fill=swatch)
-                    x += 15
-            y += 29
-        draw.line([(0, y - 1), (0, y + 6), (PANEL_WIDTH - 1, y + 6),
-                   (PANEL_WIDTH - 1, y - 1)], SECTION_LINE, 2)
-        y += 22
+    for top, accent, label, value in rows:
+        center = top + row_height // 2
+        if value is None:
+            draw.text((0, center), label, font=font, fill=FOREGROUND, anchor="lm")
+            line_start = round(font.getlength(label)) + 13
+            draw.line((line_start, center, width - margin, center), fill=SECTION_LINE)
+            continue
+        draw.text((margin, center), label, font=font, fill=accent, anchor="lm")
+        draw.text((width - margin, center), value, font=font, fill=FOREGROUND, anchor="rm")
+        if label and value:
+            first = round(margin + font.getlength(label)) + 12
+            last = round(width - margin - font.getlength(value)) - 10
+            for x in range(first, last, 7):
+                draw.ellipse((x, center + 2, x + 1, center + 3), fill=SECTION_LINE)
     return panel
 
 
-def render(demo_file, panel, mobile):
+def render(demo_file, font, mobile):
     with Image.open(demo_file) as demo:
         # The 956 × 516 upstream recording places its first text column at x=676.
         if demo.size != (956, 516):
             raise ValueError("The upstream demo layout has changed. Check the pond crop.")
         pond_box = (0, 0, 660, 516)
         if mobile:
-            pond_size = (500, 391)
-            base = Image.new("RGB", (650, 391 + panel.height + 30), BACKGROUND)
+            panel = details(font, 508)
+            pond_size = (394, 308)
+            base = Image.new("RGB", (540, 308 + panel.height + 18), BACKGROUND)
             pond_origin = ((base.width - pond_size[0]) // 2, 0)
-            base.paste(panel, (18, 396))
+            base.paste(panel, (16, 308))
         else:
-            pond_size = (514, 402)
-            base = Image.new("RGB", (1176, panel.height + 42), BACKGROUND)
-            pond_origin = (8, (base.height - pond_size[1]) // 2)
-            base.paste(panel, (540, 21))
+            panel = details(font, 626)
+            pond_size = (397, 310)
+            base = Image.new("RGB", (1056, panel.height + 34), BACKGROUND)
+            pond_origin = (4, (base.height - pond_size[1]) // 2)
+            base.paste(panel, (414, 17))
 
         original_water = Image.new("RGB", (660, 516), demo.convert("RGB").getpixel((0, 0)))
         water = Image.new("RGB", original_water.size, BACKGROUND)
@@ -111,7 +141,6 @@ def render(demo_file, panel, mobile):
 
 
 if __name__ == "__main__":
-    font = ImageFont.truetype(sys.argv[2] if len(sys.argv) > 2 else "JetBrainsMonoNerdFont-Regular.ttf", 21)
-    panel = details(font)
+    font = ImageFont.truetype(sys.argv[2] if len(sys.argv) > 2 else "JetBrainsMonoNerdFont-Regular.ttf", 18)
     for mobile in (False, True):
-        render(sys.argv[1], panel, mobile)
+        render(sys.argv[1], font, mobile)
