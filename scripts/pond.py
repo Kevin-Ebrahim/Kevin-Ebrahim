@@ -38,7 +38,7 @@ def animate_grid(parent, frames, starts, duration, **style):
 
 def pond_art(demo):
     """Read the 60-column Braille pond from a classic Koi Fetch recording."""
-    if demo.size not in ((956, 516), (660, 1078)):
+    if demo.size not in ((956, 516), (660, 516), (660, 1078)):
         raise ValueError(f"Unexpected Koi Fetch recording dimensions: {demo.size}")
     group = ET.Element("g", fill="none", stroke="currentColor", attrib={"class": "pond"})
     # Each 11 × 22 terminal cell has two columns of four Braille dots.

@@ -1,7 +1,7 @@
 """Render the desktop and mobile SVGs from portrait and landscape Koi Fetch recordings.
 
-Run: python scripts/render-profile.py ../koi-fetch/docs/demo.gif
-Optionally pass a monospace TTF path as the second argument.
+Run: python scripts/render-profile.py [landscape.gif] [monospace.ttf]
+The checked-in landscape recording is used by default.
 """
 
 import json
@@ -211,5 +211,5 @@ if __name__ == "__main__":
     sections = profile_sections(json.loads((ASSETS / "github-stats.json").read_text()))
     with Image.open(ASSETS / "koi-portrait.gif") as portrait:
         render(portrait, font, sections, mobile=False)
-    with Image.open(sys.argv[1]) as landscape:
+    with Image.open(sys.argv[1] if len(sys.argv) > 1 else ASSETS / "koi-landscape.gif") as landscape:
         render(landscape, font, sections, mobile=True)
