@@ -147,14 +147,7 @@ def column(sections, width, font):
                           transform=f"translate(25 {center_y-9}) scale(.9)",
                           fill="none", stroke="currentColor", **{"stroke-width": "1.6",
                           "stroke-linecap": "round", "stroke-linejoin": "round"})
-            key = f"{label}:"
-            text_at(section, label_x, y, key, font, "currentColor")
-            if title == "GitHub stats":
-                left = label_x + font.getlength(key) + 7
-                if left < value_x - 6:
-                    ET.SubElement(section, "path", d=f"M{left:.1f} {y-2}H{value_x-6}",
-                                  stroke=SECTION_LINE, attrib={"class": "frame", "stroke-width": "2",
-                                  "stroke-dasharray": ".1 6", "stroke-linecap": "round"})
+            text_at(section, label_x, y, f"{label}:", font, "currentColor")
             if isinstance(value, LineChanges):
                 y = draw_line_changes(section, value_x, y, width, font, value)
             else:
