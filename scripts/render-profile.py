@@ -8,6 +8,7 @@ import json
 from pathlib import Path
 import sys
 import textwrap
+from typing import NamedTuple
 from xml.etree import ElementTree as ET
 
 from PIL import Image, ImageFont
@@ -20,6 +21,11 @@ SECTION_LINE = "#58666a"
 SECTION_GAP = 16
 ASSETS = Path(__file__).resolve().parents[1] / "assets"
 LIGHT_STYLE = Path(__file__).with_name("profile-light.css")
+
+
+class LineChanges(NamedTuple):
+    additions: int
+    deletions: int
 
 
 def profile_sections(stats):
@@ -51,9 +57,11 @@ def profile_sections(stats):
         "GitHub stats": ("#d699b6", [
             ("Repos", f"{stats['public_repos']:,} public"),
             ("Commits", f"{stats['commits']:,}"),
+            ("Stars", f"{stats['stars']:,}"),
             ("Followers", f"{stats['followers']:,}"),
             ("Longest streak", f"{streak:,} {day_unit}"),
             ("Active days", f"{stats['active_days_365']} in the past year"),
+            ("Lines of code", LineChanges(stats["additions"], stats["deletions"])),
         ]),
     }
 
@@ -77,9 +85,11 @@ ICONS = {
     "Miru": "M2 3.5h16v13H2z M8 7l5 3-5 3z",
     "Repos": "M4 3h12v14H5.5a2 2 0 0 1 0-4H16 M4 15V3m3 3h5",
     "Commits": "M2 10h4m8 0h4M14 10a4 4 0 1 1-8 0 4 4 0 1 1 8 0Z",
+    "Stars": "m10 2 2.5 5.2 5.7.8-4.1 4 1 5.7-5.1-2.7-5.1 2.7 1-5.7-4.1-4 5.7-.8z",
     "Followers": "M11 6a3 3 0 1 1-6 0 3 3 0 1 1 6 0Z M2 17q0-5 6-5t6 5m2-11v6m-3-3h6",
     "Longest streak": "M11 1.5c1 5-4 6-3 10 2-1 3-2 4-5 4 3 5 6 3 9a6 6 0 0 1-11-2C3 9 8 7 11 1.5Z",
     "Active days": "M3 4h14v13H3z M6 2v4m8-4v4M3 8h14m-11 3h2m3 0h2m-7 3h2",
+    "Lines of code": "m6 6-4 4 4 4m8-8 4 4-4 4m-3-11L8 17",
 }
 
 
@@ -88,6 +98,25 @@ def text_at(parent, x, y, value, font, colour, **attrs):
                             textLength=f"{font.getlength(value):.2f}",
                             lengthAdjust="spacingAndGlyphs", **attrs)
     element.text = value
+    return element
+
+
+def draw_line_changes(section, x, y, width, font, changes):
+    net = f"{changes.additions - changes.deletions:,}"
+    added, deleted = f"+{changes.additions:,}", f"−{changes.deletions:,}"
+    detail = f"({added}, {deleted})"
+    prefix = net + " "
+    if x + font.getlength(prefix + detail) > width - 8:
+        text_at(section, x, y, net, font, FOREGROUND, **{"class": "value"})
+        y += 25
+        x = min(x, width - 8 - font.getlength(detail))
+        prefix = ""
+    text = text_at(section, x, y, prefix + detail, font, FOREGROUND, **{"class": "value"})
+    text.text = prefix + "("
+    for value, style, colour, suffix in [(added, "added", "#a7c080", ", "), (deleted, "deleted", "#e67e80", ")")]:
+        span = ET.SubElement(text, "tspan", fill=colour, attrib={"class": style})
+        span.text, span.tail = value, suffix
+    return y + 25
 
 
 def column(sections, width, font):
@@ -100,6 +129,12 @@ def column(sections, width, font):
         value_x = label_x + round(key_width) + 12
         wrap_at = int((width - value_x - 6) / font.getlength("M"))
         section = ET.SubElement(group, "g", color=accent, attrib={"class": title.lower().replace(" ", "-")})
+        if title == "GitHub stats":
+            ET.SubElement(section, "desc").text = (
+                "Stars received on owned public repositories. Commits are unique authored commits "
+                "on the public default branches scanned. Lines of code shows net lines "
+                "(additions minus deletions) in those commits, excluding merges."
+            )
         middle = width / 2
         gap = font.getlength(title) / 2 + 8
         header_y = y + 10
@@ -114,10 +149,20 @@ def column(sections, width, font):
                           transform=f"translate(25 {center_y-9}) scale(.9)",
                           fill="none", stroke="currentColor", **{"stroke-width": "1.6",
                           "stroke-linecap": "round", "stroke-linejoin": "round"})
-            text_at(section, label_x, y, f"{label}:", font, "currentColor")
-            for line in textwrap.wrap(value, width=wrap_at):
-                text_at(section, value_x, y, line, font, FOREGROUND, **{"class": "value"})
-                y += 25
+            key = f"{label}:"
+            text_at(section, label_x, y, key, font, "currentColor")
+            if title == "GitHub stats":
+                left = label_x + font.getlength(key) + 7
+                if left < value_x - 6:
+                    ET.SubElement(section, "path", d=f"M{left:.1f} {y-2}H{value_x-6}",
+                                  stroke=SECTION_LINE, attrib={"class": "frame", "stroke-width": "2",
+                                  "stroke-dasharray": ".1 6", "stroke-linecap": "round"})
+            if isinstance(value, LineChanges):
+                y = draw_line_changes(section, value_x, y, width, font, value)
+            else:
+                for line in textwrap.wrap(value, width=wrap_at):
+                    text_at(section, value_x, y, line, font, FOREGROUND, **{"class": "value"})
+                    y += 25
         tree = f"M18 {branches[0]}H8V{branches[-1]}"
         tree += "".join(f"M8 {center}h10" for center in branches[1:])
         ET.SubElement(section, "path", d=tree, fill="none", stroke="currentColor",

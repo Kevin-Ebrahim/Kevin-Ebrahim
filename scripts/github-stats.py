@@ -65,15 +65,16 @@ def public_stats():
         user(login: $login) {
           id createdAt followers { totalCount }
           repositories(first: 100, after: $endCursor, ownerAffiliations: OWNER, privacy: PUBLIC) {
-            nodes { nameWithOwner }
+            nodes { nameWithOwner stargazerCount }
             pageInfo { hasNextPage endCursor }
           }
         }
       }
     """, login=LOGIN)
     user = owned[0]["user"]
-    repos = {repo["nameWithOwner"] for page in owned for repo in page["user"]["repositories"]["nodes"]}
-    owned_count = len(repos)
+    owned_stars = {repo["nameWithOwner"]: repo["stargazerCount"]
+                   for page in owned for repo in page["user"]["repositories"]["nodes"]}
+    repos = set(owned_stars)
 
     start_year = int(user["createdAt"][:4])
     now = datetime.now(timezone.utc).replace(microsecond=0)
@@ -87,6 +88,7 @@ def public_stats():
 
     # Forks and transferred history can contain the same commit.
     commit_ids = set()
+    additions = deletions = 0
     for repo in sorted(repos):
         owner, name = repo.split("/")
         for page in pages("""
@@ -96,7 +98,7 @@ def public_stats():
                 target {
                   ... on Commit {
                     history(first: 100, after: $endCursor, author: {id: $user}) {
-                      nodes { oid }
+                      nodes { oid additions deletions parents(first: 1) { totalCount } }
                       pageInfo { hasNextPage endCursor }
                     }
                   }
@@ -107,11 +109,21 @@ def public_stats():
         """, owner=owner, name=name, user=user["id"]):
             branch = page["repository"]["defaultBranchRef"]
             if branch:
-                commit_ids.update(commit["oid"] for commit in branch["target"]["history"]["nodes"])
+                for commit in branch["target"]["history"]["nodes"]:
+                    if commit["oid"] in commit_ids:
+                        continue
+                    commit_ids.add(commit["oid"])
+                    # Merge diffs can repeat changes already counted in their parents.
+                    if commit["parents"]["totalCount"] <= 1:
+                        additions += commit["additions"]
+                        deletions += commit["deletions"]
 
     return {
-        "public_repos": owned_count,
+        "public_repos": len(owned_stars),
         "commits": len(commit_ids),
+        "stars": sum(owned_stars.values()),
+        "additions": additions,
+        "deletions": deletions,
         "followers": user["followers"]["totalCount"],
         "longest_streak": longest_streak(active_days),
         "active_days_365": sum(0 <= (now.date() - day).days < 365 for day in active_days),

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="755" viewBox="0 0 1100 755" role="img" aria-labelledby="title" font-family="'JetBrains Mono','JetBrainsMono Nerd Font',monospace" font-size="18">
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="805" viewBox="0 0 1100 805" role="img" aria-labelledby="title" font-family="'JetBrains Mono','JetBrainsMono Nerd Font',monospace" font-size="18">
   <title id="title">Kevin Ebrahim’s profile with an animated Koi Fetch pond</title>
   <style>@media (prefers-color-scheme: light) {
   .canvas { fill: none; }
@@ -12,12 +12,14 @@
   .interests { color: #805916; }
   .projects { color: #246b70; }
   .github-stats { color: #895376; }
+  .added { fill: #316c3b; }
+  .deleted { fill: #a33f43; }
 
   .pond path { stroke: color-mix(in srgb, currentColor 74%, #282e33); }
 }
 </style>
   <rect class="canvas" width="100%" height="100%" fill="#2c343a" />
-  <svg x="18" y="190" width="480" height="375" viewBox="0 0 660 516" preserveAspectRatio="none" aria-hidden="true">
+  <svg x="18" y="215" width="480" height="375" viewBox="0 0 660 516" preserveAspectRatio="none" aria-hidden="true">
     <g class="pond" fill="none" stroke="currentColor">
       <g transform="translate(.8 1.9) scale(5.5)" stroke-width=".66" stroke-dasharray=".59 .41">
         <path color="#2a4360" d="M62 66h1M63 67h1M55 71h5M58 72h1">
@@ -170,24 +172,37 @@
       <path d="M1 424v-8H232.8 M335.2 416H567v8 M1 533v8H567v-8" fill="none" stroke="#58666a" class="frame" stroke-width="1.5" />
     </g>
     <g class="github-stats" color="#d699b6">
+      <desc>Stars received on owned public repositories. Commits are unique authored commits on the public default branches scanned. Lines of code shows net lines (additions minus deletions) in those commits, excluding merges.</desc>
       <text x="284.0" y="574" fill="#9caeac" textLength="129.56" lengthAdjust="spacingAndGlyphs" class="heading" text-anchor="middle">GitHub stats</text>
       <path d="M4 3h12v14H5.5a2 2 0 0 1 0-4H16 M4 15V3m3 3h5" transform="translate(25 585) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
       <text x="51" y="600" fill="currentColor" textLength="64.78" lengthAdjust="spacingAndGlyphs">Repos:</text>
+      <path class="frame" stroke-width="2" stroke-dasharray=".1 6" stroke-linecap="round" d="M122.8 598H219" stroke="#58666a" />
       <text x="225" y="600" fill="#d3c6aa" textLength="97.17" lengthAdjust="spacingAndGlyphs" class="value">10 public</text>
       <path d="M2 10h4m8 0h4M14 10a4 4 0 1 1-8 0 4 4 0 1 1 8 0Z" transform="translate(25 610) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
       <text x="51" y="625" fill="currentColor" textLength="86.38" lengthAdjust="spacingAndGlyphs">Commits:</text>
+      <path class="frame" stroke-width="2" stroke-dasharray=".1 6" stroke-linecap="round" d="M144.4 623H219" stroke="#58666a" />
       <text x="225" y="625" fill="#d3c6aa" textLength="32.39" lengthAdjust="spacingAndGlyphs" class="value">810</text>
-      <path d="M11 6a3 3 0 1 1-6 0 3 3 0 1 1 6 0Z M2 17q0-5 6-5t6 5m2-11v6m-3-3h6" transform="translate(25 635) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-      <text x="51" y="650" fill="currentColor" textLength="107.97" lengthAdjust="spacingAndGlyphs">Followers:</text>
-      <text x="225" y="650" fill="#d3c6aa" textLength="10.80" lengthAdjust="spacingAndGlyphs" class="value">9</text>
-      <path d="M11 1.5c1 5-4 6-3 10 2-1 3-2 4-5 4 3 5 6 3 9a6 6 0 0 1-11-2C3 9 8 7 11 1.5Z" transform="translate(25 660) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-      <text x="51" y="675" fill="currentColor" textLength="161.95" lengthAdjust="spacingAndGlyphs">Longest streak:</text>
-      <text x="225" y="675" fill="#d3c6aa" textLength="75.58" lengthAdjust="spacingAndGlyphs" class="value">16 days</text>
-      <path d="M3 4h14v13H3z M6 2v4m8-4v4M3 8h14m-11 3h2m3 0h2m-7 3h2" transform="translate(25 685) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-      <text x="51" y="700" fill="currentColor" textLength="129.56" lengthAdjust="spacingAndGlyphs">Active days:</text>
-      <text x="225" y="700" fill="#d3c6aa" textLength="215.94" lengthAdjust="spacingAndGlyphs" class="value">149 in the past year</text>
-      <path d="M18 594H8V694M8 619h10M8 644h10M8 669h10M8 694h10" fill="none" stroke="currentColor" opacity=".76" stroke-width="1.5" />
-      <path d="M1 576v-8H211.2 M356.8 568H567v8 M1 710v8H567v-8" fill="none" stroke="#58666a" class="frame" stroke-width="1.5" />
+      <path d="m10 2 2.5 5.2 5.7.8-4.1 4 1 5.7-5.1-2.7-5.1 2.7 1-5.7-4.1-4 5.7-.8z" transform="translate(25 635) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      <text x="51" y="650" fill="currentColor" textLength="64.78" lengthAdjust="spacingAndGlyphs">Stars:</text>
+      <path class="frame" stroke-width="2" stroke-dasharray=".1 6" stroke-linecap="round" d="M122.8 648H219" stroke="#58666a" />
+      <text x="225" y="650" fill="#d3c6aa" textLength="10.80" lengthAdjust="spacingAndGlyphs" class="value">0</text>
+      <path d="M11 6a3 3 0 1 1-6 0 3 3 0 1 1 6 0Z M2 17q0-5 6-5t6 5m2-11v6m-3-3h6" transform="translate(25 660) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      <text x="51" y="675" fill="currentColor" textLength="107.97" lengthAdjust="spacingAndGlyphs">Followers:</text>
+      <path class="frame" stroke-width="2" stroke-dasharray=".1 6" stroke-linecap="round" d="M166.0 673H219" stroke="#58666a" />
+      <text x="225" y="675" fill="#d3c6aa" textLength="10.80" lengthAdjust="spacingAndGlyphs" class="value">9</text>
+      <path d="M11 1.5c1 5-4 6-3 10 2-1 3-2 4-5 4 3 5 6 3 9a6 6 0 0 1-11-2C3 9 8 7 11 1.5Z" transform="translate(25 685) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      <text x="51" y="700" fill="currentColor" textLength="161.95" lengthAdjust="spacingAndGlyphs">Longest streak:</text>
+      <text x="225" y="700" fill="#d3c6aa" textLength="75.58" lengthAdjust="spacingAndGlyphs" class="value">16 days</text>
+      <path d="M3 4h14v13H3z M6 2v4m8-4v4M3 8h14m-11 3h2m3 0h2m-7 3h2" transform="translate(25 710) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      <text x="51" y="725" fill="currentColor" textLength="129.56" lengthAdjust="spacingAndGlyphs">Active days:</text>
+      <path class="frame" stroke-width="2" stroke-dasharray=".1 6" stroke-linecap="round" d="M187.6 723H219" stroke="#58666a" />
+      <text x="225" y="725" fill="#d3c6aa" textLength="215.94" lengthAdjust="spacingAndGlyphs" class="value">149 in the past year</text>
+      <path d="m6 6-4 4 4 4m8-8 4 4-4 4m-3-11L8 17" transform="translate(25 735) scale(.9)" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      <text x="51" y="750" fill="currentColor" textLength="151.16" lengthAdjust="spacingAndGlyphs">Lines of code:</text>
+      <path class="frame" stroke-width="2" stroke-dasharray=".1 6" stroke-linecap="round" d="M209.2 748H219" stroke="#58666a" />
+      <text x="225" y="750" fill="#d3c6aa" textLength="323.91" lengthAdjust="spacingAndGlyphs" class="value">716,526 (<tspan class="added" fill="#a7c080">+1,207,178</tspan>, <tspan class="deleted" fill="#e67e80">−490,652</tspan>)</text>
+      <path d="M18 594H8V744M8 619h10M8 644h10M8 669h10M8 694h10M8 719h10M8 744h10" fill="none" stroke="currentColor" opacity=".76" stroke-width="1.5" />
+      <path d="M1 576v-8H211.2 M356.8 568H567v8 M1 760v8H567v-8" fill="none" stroke="#58666a" class="frame" stroke-width="1.5" />
     </g>
   </g>
 </svg>
