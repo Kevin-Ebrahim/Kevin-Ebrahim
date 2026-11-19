@@ -18,12 +18,13 @@ ASSETS = Path(__file__).resolve().parents[1] / "assets"
 
 
 def profile_sections(stats):
+    streak = stats["longest_streak"]
+    day_unit = "day" if streak == 1 else "days"
     return {
         "Profile": ("#a7c080", [
             ("Name", "Kevin Ebrahim"),
             ("Field", "Computer Science · HPC"),
             ("University", "Wits"),
-            ("Interests", "Linux, systems, developer tools"),
             ("Community", "Wits HPC SIG"),
             ("Editor", "Neovim"),
             ("OS", "Omarchy · Arch Linux"),
@@ -31,7 +32,7 @@ def profile_sections(stats):
         "Languages": ("#a7c080", [
             ("Programming", "Python, C++, TypeScript"),
             ("Scripting", "Bash"),
-            ("Learning", "Rust"),
+            ("Exploring", "Rust"),
         ]),
         "Interests": ("#dbbc7f", [
             ("Software", "Linux, developer tools"),
@@ -39,16 +40,17 @@ def profile_sections(stats):
             ("Side Quests", "Game dev, ricing"),
         ]),
         "Projects": ("#7fbbb3", [
-            ("Wits World", "Location-based campus adventure"),
-            ("Specimen", "3D puzzle-platformer · Three.js"),
-            ("VitaQ", "Community Clinic Appointment & Queue System"),
+            ("Wits World", "Campus exploration game"),
+            ("Specimen", "3D puzzle-platformer"),
+            ("VitaQ", "Clinic booking & queues"),
             ("Miru", "Anime TUI · Rust"),
         ]),
         "GitHub Stats": ("#d699b6", [
             ("Repos", f"{stats['public_repos']:,} public"),
             ("Commits", f"{stats['commits']:,}"),
             ("Followers", f"{stats['followers']:,}"),
-            ("Lines of Code", f"{stats['net_lines']:,} net"),
+            ("Longest streak", f"{streak:,} {day_unit}"),
+            ("Active days", f"{stats['active_days_365']} in the last 365"),
         ]),
     }
 
@@ -99,15 +101,16 @@ def render(demo_file, font, sections, mobile):
             pond_origin = ((base.width - pond_size[0]) // 2, 0)
             base.paste(panel, (16, 308))
         else:
-            left = details(font, 402, sections, ["Interests"])
-            right = details(font, 638, sections, ["Profile", "Languages", "Projects", "GitHub Stats"])
-            pond_size = (408, 319)
-            height = max(pond_size[1] + left.height + 12, right.height) + 36
+            left = details(font, 480, sections, ["Interests"])
+            right = details(font, 568, sections, ["Profile", "Languages", "Projects", "GitHub Stats"])
+            pond_size = (480, 375)
+            left_height = pond_size[1] + 12 + left.height
+            height = max(left_height, right.height) + 36
             base = Image.new("RGB", (1100, height), BACKGROUND)
-            upper_height = height - left.height - 36
-            pond_origin = (14, (upper_height - pond_size[1]) // 2 + 9)
-            base.paste(left, (18, height - left.height - 18))
-            base.paste(right, (444, 18))
+            top = (height - left_height) // 2
+            pond_origin = (18, top)
+            base.paste(left, (18, top + pond_size[1] + 12))
+            base.paste(right, (514, 18))
 
         original_water = Image.new("RGB", (660, 516), demo.convert("RGB").getpixel((0, 0)))
         water = Image.new("RGB", original_water.size, BACKGROUND)
