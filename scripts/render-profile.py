@@ -89,13 +89,12 @@ def text_at(parent, x, y, value, font, colour, **attrs):
     element.text = value
 
 
-def column(sections, titles, width, font, min_section_height=0):
+def column(sections, width, font):
     """Draw open terminal frames with values aligned inside each section."""
     group = ET.Element("g")
     label_x = 51
     y = 0
-    for title in titles:
-        accent, fields = sections[title]
+    for title, (accent, fields) in sections.items():
         key_width = max(font.getlength(f"{key}:") for key, _ in fields)
         value_x = label_x + round(key_width) + 12
         wrap_at = int((width - value_x - 6) / font.getlength("M"))
@@ -105,31 +104,24 @@ def column(sections, titles, width, font, min_section_height=0):
         header_y = y + 10
         border = f"M1 {header_y + 8}v-8H{middle-gap:.1f} M{middle+gap:.1f} {header_y}H{width-1}v8"
         text_at(section, middle, y + 16, title, font, "#9caeac", **{"text-anchor": "middle"})
-        section_top = y
         y += 42
-        rows = [(label, textwrap.wrap(value, width=wrap_at)) for label, value in fields]
-        line_height = 25
-        natural_bottom = y + line_height * sum(len(lines) for _, lines in rows) - 7
-        bottom = max(natural_bottom, section_top + min_section_height - 1)
-        extra = bottom - natural_bottom
         branches = []
-        for index, (label, lines) in enumerate(rows):
-            # Spread spare height between fields, keeping wrapped lines together.
-            baseline = y + extra * index // max(1, len(rows) - 1)
-            center_y = baseline - 6
+        for label, value in fields:
+            center_y = y - 6
             branches.append(center_y)
             ET.SubElement(section, "path", d=ICONS[label],
                           transform=f"translate(25 {center_y-9}) scale(.9)",
                           fill="none", stroke=accent, **{"stroke-width": "1.6",
                           "stroke-linecap": "round", "stroke-linejoin": "round"})
-            text_at(section, label_x, baseline, f"{label}:", font, accent)
-            for line_number, line in enumerate(lines):
-                text_at(section, value_x, baseline + line_number * line_height, line, font, FOREGROUND)
-            y += len(lines) * line_height
+            text_at(section, label_x, y, f"{label}:", font, accent)
+            for line in textwrap.wrap(value, width=wrap_at):
+                text_at(section, value_x, y, line, font, FOREGROUND)
+                y += 25
         tree = f"M18 {branches[0]}H8V{branches[-1]}"
         tree += "".join(f"M8 {center}h10" for center in branches[1:])
         ET.SubElement(section, "path", d=tree, fill="none", stroke=accent,
                       opacity=".76", **{"stroke-width": "1.5"})
+        bottom = y - 7
         border += f" M1 {bottom-8}v8H{width-1}v-8"
         ET.SubElement(section, "path", d=border, fill="none", stroke=SECTION_LINE,
                       **{"stroke-width": "1.5"})
@@ -140,21 +132,16 @@ def column(sections, titles, width, font, min_section_height=0):
 def render(shapes, font, sections, mobile):
     if mobile:
         width = 500
-        panel, panel_height = column(sections, sections, width - 32, font)
-        panel_y = 316
+        panel, panel_height = column(sections, width - 32, font)
+        panel_x, panel_y = 16, 316
         height = panel_y + panel_height + 16
-        panels = [(panel, 16, panel_y)]
         pond_box = (53, 0, 394, 308)
     else:
         width = 1100
-        profile, profile_height = column(sections, ["Profile", "Languages", "Projects"], 568, font)
-        stats, stats_height = column(sections, ["GitHub stats"], 568, font)
-        interests, interests_height = column(sections, ["Interests"], 480, font, min_section_height=stats_height)
-        upper_height = max(375, profile_height)
-        lower_y = 18 + upper_height + SECTION_GAP
-        height = lower_y + max(interests_height, stats_height) + 18
-        panels = [(profile, 514, 18), (interests, 18, lower_y), (stats, 514, lower_y)]
-        pond_box = (18, 18 + (upper_height - 375) // 2, 480, 375)
+        panel, panel_height = column(sections, 568, font)
+        height = max(panel_height, 375) + 36
+        panel_x, panel_y = 514, (height - panel_height) // 2
+        pond_box = (18, (height - 375) // 2, 480, 375)
 
     svg = ET.Element("svg", xmlns="http://www.w3.org/2000/svg", width=str(width), height=str(height),
                      viewBox=f"0 0 {width} {height}", role="img", **{"aria-labelledby": "title",
@@ -166,9 +153,8 @@ def render(shapes, font, sections, mobile):
     pond = ET.SubElement(svg, "svg", x=str(px), y=str(py), width=str(pw), height=str(ph),
                          viewBox="0 0 660 516", preserveAspectRatio="none", **{"aria-hidden": "true"})
     pond.append(shapes)
-    for panel, x, y in panels:
-        panel.set("transform", f"translate({x} {y})")
-        svg.append(panel)
+    panel.set("transform", f"translate({panel_x} {panel_y})")
+    svg.append(panel)
     ET.indent(svg)
     filename = "profile-mobile.svg" if mobile else "profile.svg"
     ET.ElementTree(svg).write(ASSETS / filename, encoding="utf-8", xml_declaration=True)
