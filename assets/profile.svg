@@ -146,15 +146,14 @@
       <text x="240.0" y="16" fill="#9caeac" textLength="97.17" lengthAdjust="spacingAndGlyphs" text-anchor="middle">Interests</text>
       <path d="M1.5 3.5h17v13h-17z M2 7.5h16M5 5.5h.2m2 0h.2" transform="translate(25 27) scale(.9)" fill="none" stroke="#dbbc7f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
       <text x="51" y="42" fill="#dbbc7f" textLength="97.17" lengthAdjust="spacingAndGlyphs">Software:</text>
-      <text x="193" y="42" fill="#d3c6aa" textLength="205.14" lengthAdjust="spacingAndGlyphs">Linux, open source,</text>
-      <text x="193" y="67" fill="#d3c6aa" textLength="140.36" lengthAdjust="spacingAndGlyphs">cybersecurity</text>
-      <path d="M2 3h16v6H2z M2 11h16v6H2z M5 6h1m2 0h1m-4 8h1m2 0h1" transform="translate(25 89) scale(.9)" fill="none" stroke="#dbbc7f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-      <text x="51" y="104" fill="#dbbc7f" textLength="97.17" lengthAdjust="spacingAndGlyphs">Hardware:</text>
-      <text x="193" y="104" fill="#d3c6aa" textLength="259.12" lengthAdjust="spacingAndGlyphs">Servers, networking, HPC</text>
+      <text x="193" y="42" fill="#d3c6aa" textLength="226.73" lengthAdjust="spacingAndGlyphs">Linux, FOSS, security</text>
+      <path d="M2 3h16v6H2z M2 11h16v6H2z M5 6h1m2 0h1m-4 8h1m2 0h1" transform="translate(25 77) scale(.9)" fill="none" stroke="#dbbc7f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      <text x="51" y="92" fill="#dbbc7f" textLength="97.17" lengthAdjust="spacingAndGlyphs">Hardware:</text>
+      <text x="193" y="92" fill="#d3c6aa" textLength="259.12" lengthAdjust="spacingAndGlyphs">Servers, networking, HPC</text>
       <path d="M6 6h8q2.5 0 3.2 3l1.2 5q.6 4-2.4 2l-3-3H7l-3 3q-3 2-2.4-2l1.2-5Q3.5 6 6 6Z M6 8v4m-2-2h4m4-1h.3m1.8 2h.3" transform="translate(25 127) scale(.9)" fill="none" stroke="#dbbc7f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
       <text x="51" y="142" fill="#dbbc7f" textLength="129.56" lengthAdjust="spacingAndGlyphs">Side quests:</text>
       <text x="193" y="142" fill="#d3c6aa" textLength="259.12" lengthAdjust="spacingAndGlyphs">Games, ricing, tinkering</text>
-      <path d="M18 36H8V136M8 98h10M8 136h10" fill="none" stroke="#dbbc7f" opacity=".76" stroke-width="1.5" />
+      <path d="M18 36H8V136M8 86h10M8 136h10" fill="none" stroke="#dbbc7f" opacity=".76" stroke-width="1.5" />
       <path d="M1 18v-8H183.4 M296.6 10H479v8 M1 152v8H479v-8" fill="none" stroke="#58666a" stroke-width="1.5" />
     </g>
   </g>

@@ -37,7 +37,7 @@ def profile_sections(stats):
             ("Exploring", "Rust"),
         ]),
         "Interests": ("#dbbc7f", [
-            ("Software", "Linux, open source, cybersecurity"),
+            ("Software", "Linux, FOSS, security"),
             ("Hardware", "Servers, networking, HPC"),
             ("Side quests", "Games, ricing, tinkering"),
         ]),
